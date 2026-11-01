@@ -1,184 +1,173 @@
 # 02. Software Architecture Design
 
-> **Owner:** User / project director. **Purpose:** Capture the approved full-stack software architecture and important boundaries. **Editing rule:** Claude must treat this file as read-only unless explicitly asked to edit it.
+> **Owner:** User / project director. **Purpose:** Capture the full-stack architecture and its important boundaries. **Editing rule:** Claude treats this file as read-only unless explicitly asked to edit it.
+>
+> **How to fill:** Complete Part A first; refine Part B in later iterations. Groups marked **(one)** take a single choice; others allow several.
+> **Values:** `[x]` selected · blank = unknown · `Claude proposes` = delegated to the plan · `N/A` = not applicable · `Later` = deferred.
+>
+> This file owns infrastructure choices, including queues, workflow engines, streaming transport, LLM provider, and agent framework. `03-DESIGN_AGENT_WORKFLOW.md` refers here rather than repeating them.
 
-Use checkboxes to select options. For single-choice groups, select one option. Add `Other` or a short explanation when needed. An unchecked option is not an approval.
+---
 
-## 1. Architecture overview
+# Part A: Essentials
 
-### System summary
-Describe the major components and how requests and data move through the system.
+## 1. System summary
+
+In 2–4 sentences: the major components and how a request and its data move through the system.
 
 _Write here:_
 
-### Architecture style
+## 2. Architecture style (one)
+
 - [ ] Modular monolith
-- [ ] Service-oriented architecture
-- [ ] Microservices
-- [ ] Serverless
-- [ ] Client-heavy application with backend APIs
+- [ ] Client application with backend API
+- [ ] Serverless functions
+- [ ] Multiple services
 - [ ] Other:
 
-**Why this style fits:**
+## 3. Technology choices
 
-### Component map
+| Area | Choice | Flexibility (one) |
+|---|---|---|
+| Frontend | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| Backend | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| Primary database | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| LLM provider(s) | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| Agent framework / orchestration | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| Hosting / run target | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
+| Other | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
 
-| Component | Responsibility | Runs where | Calls / depends on |
+## 4. Identity and access
+
+- **Authentication (one):** [ ] None for local demo [ ] Email / password [ ] OAuth / social [ ] Enterprise SSO [ ] Managed identity provider [ ] Other:
+- **Authorization:** [ ] No protected roles [ ] Role-based (RBAC) [ ] Resource ownership checks [ ] Attribute-based (ABAC) [ ] Other:
+- **Tenant model (one):** [ ] Single user [ ] Single organization [ ] Multi-tenant [ ] N/A
+
+## 5. External integrations
+
+| Integration / provider | Purpose | Required now? | Mock acceptable? | Failure behavior |
+|---|---|---|---|---|
+| | | [ ] Yes [ ] Later | [ ] Yes [ ] No | |
+| | | [ ] Yes [ ] Later | [ ] Yes [ ] No | |
+
+## 6. Execution pattern
+
+- **Primary request pattern (one):** [ ] Synchronous request / response [ ] Streaming response [ ] Background job [ ] Mixed
+- **Long-running work (one):** [ ] Not needed [ ] In-process background task [ ] Queue + worker [ ] Durable workflow engine:
+- **Streaming transport (one):** [ ] Not needed [ ] Server-Sent Events (SSE) [ ] WebSockets [ ] Polling [ ] Other:
+
+A short request does not need a durable workflow engine. Work that must survive restarts, wait for people or timers, or resume after failure may need one.
+
+**Part A ready for planning:** [ ]
+
+---
+
+# Part B: Detail (fill when relevant; blank sections are treated as `Claude proposes`)
+
+## 7. Components
+
+| Component | Responsibility | Runs where | Depends on |
 |---|---|---|---|
 | Frontend | | | |
 | Backend / API | | | |
-| Agentic service (if applicable) | | | |
-| Background worker (if applicable) | | | |
-| Other | | | |
+| Agent service (if separate) | | | |
+| Background worker (if any) | | | |
 
-### Architecture diagram (optional)
 ```text
-Add diagram or describe the flow here.
+Optional diagram or flow description.
 ```
 
-## 2. Frontend
+## 8. Frontend
 
-- **Application type:** [ ] Web app [ ] Mobile app [ ] Desktop app [ ] CLI [ ] API only [ ] Other:
-- **Framework / language:** [ ] React [ ] Next.js [ ] Vue [ ] Svelte [ ] Angular [ ] Flutter [ ] Native [ ] Other:
-- **Rendering / interaction:** [ ] Client-rendered [ ] Server-rendered [ ] Static [ ] Mixed [ ] Not applicable
-- **UI component approach:** [ ] Existing component library [ ] Custom components [ ] Minimal UI [ ] Other:
+- **Application type (one):** [ ] Web [ ] Mobile [ ] Desktop [ ] CLI [ ] API only [ ] Other:
+- **Rendering (one):** [ ] Client-rendered [ ] Server-rendered [ ] Static [ ] Mixed [ ] N/A
+- **UI approach (one):** [ ] Component library: [ ] Custom components [ ] Minimal UI
 - **State management:**
-- **Streaming / real-time UI:** [ ] Not needed [ ] Server-Sent Events (SSE) [ ] WebSockets [ ] Polling [ ] Other:
-- **Accessibility or responsive requirements:**
+- **Accessibility / responsive requirements:**
 
-## 3. Backend and API
+## 9. Backend and API
 
-- **Backend language / framework:** [ ] Python [ ] TypeScript / Node.js [ ] Java [ ] Go [ ] .NET [ ] Other:
-- **API style:** [ ] REST [ ] GraphQL [ ] gRPC [ ] RPC / actions [ ] Other:
-- **API contract:** [ ] OpenAPI [ ] Schema-first [ ] Code-first [ ] Other:
-- **Backend structure:** [ ] Modular application [ ] Multiple services [ ] Serverless functions [ ] Other:
-- **Validation and error format:**
+- **API style (one):** [ ] REST [ ] GraphQL [ ] gRPC [ ] RPC / server actions [ ] Other:
+- **API contract (one):** [ ] OpenAPI [ ] Schema-first [ ] Code-first [ ] Other:
+- **Error format** (default: one consistent structured shape):
 - **Rate limiting / request limits:**
-- **API versioning needs:**
+- **Versioning needs:**
 
-## 4. Data storage
+## 10. Data storage
 
-### Primary data store
-- [ ] PostgreSQL
-- [ ] MySQL
-- [ ] SQLite
-- [ ] MongoDB
-- [ ] Managed cloud database
-- [ ] Other:
-- **Reason / data model notes:**
-
-### Additional storage
-- **Cache:** [ ] None [ ] Redis [ ] In-process [ ] Managed cache [ ] Other:
-- **Search / vector retrieval:** [ ] None [ ] PostgreSQL extension [ ] Dedicated vector store [ ] Search service [ ] Other:
-- **Object / file storage:** [ ] None [ ] Local for MVP [ ] S3-compatible [ ] Cloud object storage [ ] Other:
-- **Analytics / event store:**
+- **Data model notes:**
+- **Cache (one):** [ ] None [ ] In-process [ ] Redis [ ] Managed cache [ ] Other:
+- **Search / vector retrieval (one):** [ ] None [ ] Database extension [ ] Dedicated vector store [ ] Search service [ ] Other:
+- **File / object storage (one):** [ ] None [ ] Local for now [ ] S3-compatible / cloud object storage [ ] Other:
 - **Backup and restore expectations:**
 
-## 5. Identity, authorization, and tenancy
+## 11. Identity details
 
-- **Authentication:** [ ] None for local demo [ ] Email / password [ ] OAuth / social login [ ] Enterprise SSO [ ] Managed identity provider [ ] Other:
-- **Authorization:** [ ] No protected roles [ ] Role-based access control (RBAC) [ ] Attribute-based access control (ABAC) [ ] Resource ownership checks [ ] Other:
-- **Roles / permissions:**
-- **Tenant model:** [ ] Single-user / single-tenant [ ] Shared single tenant [ ] Multi-tenant [ ] Not applicable
+- **Roles and permissions:**
 - **Data isolation approach:**
 - **Admin / privileged operations:**
 - **Session and token handling:**
 
-## 6. External integrations
+## 12. Integration details
 
-| Integration / provider | Purpose | Interface | Required for MVP? | Failure behavior |
-|---|---|---|---|---|
-| | | [ ] API [ ] SDK [ ] MCP [ ] Webhook [ ] Other | [ ] Yes [ ] No | |
-| | | [ ] API [ ] SDK [ ] MCP [ ] Webhook [ ] Other | [ ] Yes [ ] No | |
+- **Credential and secret management:**
+- **Sandbox / mock approach for development:**
+- **Webhook or callback verification:**
 
-- **External API credentials and secret management:**
-- **Mock / sandbox option for development:**
-- **Webhook verification or callback security:**
+## 13. Background work and reliability
 
-## 7. Request execution and background work
+- **Queue / job technology:**
+- **Durable workflow engine:**
+- **Job state and recovery (one):** [ ] Not needed [ ] Persist job status [ ] Checkpoint and resume [ ] Full execution history
+- **Timeouts, retries, and cancellation:**
+- **Actions that must never happen twice:**
 
-- **Primary request pattern:** [ ] Synchronous request / response [ ] Streaming response [ ] Background job [ ] Mixed
-- **Long-running work:** [ ] Not needed [ ] In-process background task [ ] Queue + worker [ ] Durable workflow engine [ ] Other:
-- **Queue / job technology:** [ ] Framework-native [ ] Managed queue [ ] Redis-backed queue [ ] RabbitMQ [ ] Kafka / event streaming [ ] Other:
-- **Durable workflow engine:** [ ] Not needed [ ] Temporal [ ] Inngest [ ] Trigger.dev [ ] Cloud workflow service [ ] Other:
-- **Persistence / recovery needs:** [ ] Not needed [ ] Persist job status [ ] Checkpoint and resume [ ] Durable execution history [ ] Other:
-- **Retries, timeouts, and cancellation:**
-- **Idempotency requirements:** Which actions must not happen twice?
+## 14. Deployment and environments
 
-**Design notes:** A normal short request does not automatically need a durable workflow engine. Long-running work that must survive restarts, wait for people or timers, or resume after failure may need durable orchestration.
+- **Environments:** [ ] Local [ ] Development [ ] Staging [ ] Production
+- **Deployment model (one):** [ ] Single application [ ] Containers [ ] Serverless [ ] Multiple services [ ] Other:
+- **CI / CD (one):** [ ] None [ ] Basic automated checks [ ] Build and deploy pipeline
+- **Infrastructure as code (one):** [ ] Not needed [ ] Required [ ] Later
+- **Configuration and secrets:**
 
-## 8. Deployment and environments
+## 15. Security and privacy
 
-- **Development:** [ ] Local only [ ] Containers [ ] Shared dev environment [ ] Other:
-- **Hosting:** [ ] Vercel [ ] AWS [ ] Azure [ ] GCP [ ] Fly.io [ ] Render [ ] Railway [ ] Self-hosted [ ] Other:
-- **Deployment model:** [ ] Single application [ ] Containers [ ] Serverless [ ] Multiple services [ ] Other:
-- **Environments:** [ ] Local [ ] Development [ ] Staging [ ] Production [ ] Other:
-- **CI / CD:** [ ] None for MVP [ ] Basic automated checks [ ] Build and deploy pipeline [ ] Other:
-- **Infrastructure as code:** [ ] Not needed for MVP [ ] Required [ ] Later [ ] Other:
-- **Environment configuration and secrets:**
+The baseline in `instructions/00-STANDARDS.md` always applies. Select project-specific additions:
 
-## 9. Security, privacy, and reliability
-
-- [ ] Validate inputs at trust boundaries.
-- [ ] Enforce authorization on the server, not only in the UI or model instructions.
-- [ ] Protect tenant and resource data from cross-access.
-- [ ] Store secrets outside source control.
-- [ ] Use secure transport and appropriate encryption at rest.
-- [ ] Apply upload, file type, and file size restrictions where relevant.
-- [ ] Protect against common web and API security risks.
-- [ ] Add audit logs for important actions.
-- [ ] Define data retention and deletion behavior.
-- [ ] Add backups and recovery procedures where required.
+- [ ] Audit log of important actions
+- [ ] Encryption at rest beyond platform defaults
+- [ ] Defined data retention and deletion
+- [ ] Backups and tested recovery
+- [ ] Upload type and size restrictions
 - [ ] Other:
 
 **Project-specific security / privacy notes:**
 
-## 10. Observability and operations
+## 16. Observability
 
-- **Logging:** [ ] Basic application logs [ ] Structured logs [ ] Centralized logging [ ] Other:
-- **Metrics:** [ ] Not needed for MVP [ ] Basic health metrics [ ] Service metrics [ ] Business metrics [ ] Other:
-- **Tracing:** [ ] Not needed for MVP [ ] Request tracing [ ] Distributed tracing [ ] Agent / workflow tracing [ ] Other:
-- **Error monitoring:** [ ] Console / logs [ ] Error reporting service [ ] Other:
-- **Health checks / status endpoint:**
-- **Alerts or operational response needs:**
+The delivery profile sets the default (`instructions/00-STANDARDS.md`). Record overrides or additions:
 
-## 11. Quality and testing
+- **Logging / metrics / tracing:**
+- **Error monitoring:**
+- **Alerts or operational response:**
 
-- **Backend tests:** [ ] Unit [ ] Integration [ ] API / contract [ ] End-to-end [ ] Other:
-- **Frontend tests:** [ ] Component [ ] Integration [ ] Browser end-to-end [ ] Other:
-- **Data / migration tests:**
-- **Security / permission tests:**
-- **Load / performance tests:** [ ] Not for MVP [ ] Required [ ] Later
+## 17. Testing
+
+The delivery profile sets the default test depth. Record additions:
+
 - **Critical paths that must be tested:**
+- **Security / permission tests:**
+- **Load / performance tests (one):** [ ] Not needed [ ] Required [ ] Later
 
-## 12. Performance and scale
+## 18. Performance and scale
 
 - **Expected initial users / workload:**
-- **Expected growth:**
-- **Target response time / latency:**
+- **Target response time:**
 - **Throughput / concurrency needs:**
 - **Availability / recovery targets:**
-- **Known bottlenecks or constraints:**
 
-## 13. Approved technology choices
+## 19. Open questions and trade-offs
 
-| Area | Approved choice | Flexibility |
-|---|---|---|
-| Frontend | | [ ] Fixed [ ] Suggest alternatives |
-| Backend | | [ ] Fixed [ ] Suggest alternatives |
-| Database | | [ ] Fixed [ ] Suggest alternatives |
-| Hosting | | [ ] Fixed [ ] Suggest alternatives |
-| Agent framework (if applicable) | | [ ] Fixed [ ] Suggest alternatives |
-| Other | | [ ] Fixed [ ] Suggest alternatives |
-
-## 14. Open questions and trade-offs
-
-| Question / trade-off | Options considered | Current direction | Needs director approval? |
+| Question / trade-off | Options considered | Current direction | Needs decision? |
 |---|---|---|---|
 | | | | [ ] Yes [ ] No |
-
----
-
-**Director sign-off:** [ ] This software design is ready for planning.
-
-Claude may recommend changes separately, but a material architecture change requires your approval and should be recorded in `docs/06-DECISIONS.md`.

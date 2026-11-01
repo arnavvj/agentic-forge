@@ -1,58 +1,42 @@
 # 06. Decision Log
 
-> **Ownership:** Shared record. The user is the final decision maker. Record material architecture, product, and implementation decisions with their rationale.
+> **Ownership:** Shared record. The user is the final decision maker. Record material product, architecture, data, security, agent, and scope decisions.
+>
+> An approved decision supersedes the design documents (`docs/01` to `docs/03`) on the specific point it covers. The user may update the design document later to match.
 
 ## Decision register
 
-| ID | Date | Decision | Status | Area |
-|---|---|---|---|---|
-| ADR-001 | | | [ ] Proposed [ ] Approved [ ] Rejected [ ] Superseded | |
+For the Prototype profile, a register row is a complete record. For MVP and Production candidate, see `instructions/00-STANDARDS.md` for which decisions need a full record.
 
-## Decision record template
+| ID | Date | Decision | Area | Status | Supersedes (design section or ADR) | Approval |
+|---|---|---|---|---|---|---|
+| ADR-001 | | | | Proposed | | |
 
-Copy this section for each material decision.
+**Area:** Product · Architecture · Data · Security · Agent workflow · Infrastructure · Scope · Other
+**Status:** Proposed · Approved · Rejected · Superseded
 
-### ADR-XXX: Decision title
+The **Approval** column holds `Approved (chat, YYYY-MM-DD): <summary of the user's message>`. Claude fills it only from an explicit user approval.
 
-- **Date:**
-- **Status:** [ ] Proposed [ ] Approved [ ] Rejected [ ] Superseded
-- **Raised by:**
-- **Area:** [ ] Product [ ] Architecture [ ] Data [ ] Security [ ] Agent workflow [ ] Infrastructure [ ] Scope [ ] Other:
-- **Related requirement / task:**
+## Full decision record
 
-#### Context
-What problem or trade-off requires a decision?
+Copy for each decision that needs one.
 
-_Write here:_
+### ADR-XXX: Title
 
-#### Options considered
+- **Date / raised by / area:**
+- **Related requirement, task, or design section:**
+- **Context:** What problem or trade-off requires a decision?
+- **Options considered:**
 
 | Option | Benefits | Costs / risks |
 |---|---|---|
 | | | |
-| | | |
 
-#### Recommendation
-_Write here:_
+- **Recommendation:**
+- **Final decision and rationale:**
+- **Consequences and follow-up:**
+- **Approval:**
 
-#### Final decision
-_Write here:_
+## Changing a decision
 
-#### Rationale
-Why was this option selected?
-
-_Write here:_
-
-#### Consequences
-- **Positive:**
-- **Negative / trade-offs:**
-- **Follow-up actions:**
-
-#### Approval
-- **Decision maker:**
-- **Approval date:**
-- **Explicit approval reference / note:**
-
-## Change history
-
-When an approved decision changes, do not silently overwrite its history. Mark the old decision as superseded and create a new record explaining what changed and why.
+Do not overwrite an approved decision. Mark it `Superseded` and add a new decision that explains what changed and why.

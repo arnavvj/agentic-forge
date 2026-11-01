@@ -1,142 +1,143 @@
 # 01. Project Definition
 
-> **Owner:** User / project director. **Purpose:** Define what is being built and why. **Editing rule:** Claude must treat this file as read-only unless explicitly asked to edit it.
+> **Owner:** User / project director. **Purpose:** Define what is being built and why. **Editing rule:** Claude treats this file as read-only unless explicitly asked to edit it.
+>
+> **How to fill:** Complete Part A first. Aim for 15–20 minutes across Part A of `01`, `02`, and `03` together, then say `START`. Refine Part B in later iterations and say `REPLAN`.
+> **Values:** `[x]` selected · blank = unknown · `Claude proposes` = delegated to the plan · `N/A` = not applicable · `Later` = deferred.
 
-## 1. Project snapshot
+---
+
+# Part A: Essentials
+
+## 1. Snapshot
 
 - **Project name:**
 - **One-line description:**
-- **Project type:** [ ] MVP [ ] Hackathon / interview [ ] Internal tool [ ] Production system [ ] Other:
-- **Target delivery / demo date:**
+- **Delivery profile (one):** [ ] Prototype [ ] MVP [ ] Production candidate. See `instructions/00-STANDARDS.md`.
+- **Timebox / deadline:**
 - **Primary success measure:**
 
-## 2. Problem and context
+## 2. Problem
 
-### Problem statement
-Describe the problem, who experiences it, and why it matters.
-
-_Write here:_
-
-### Current situation
-- How is this problem handled today?
-- What is slow, difficult, expensive, unreliable, or missing?
-- Why is a new solution needed?
+In 2–4 sentences: the problem, who has it, and why it matters.
 
 _Write here:_
 
-## 3. Target users
+## 3. Users
 
-| User type / role | Goals | Main needs | Access or restrictions |
-|---|---|---|---|
-| | | | |
-| | | | |
+| User type / role | Goal | Access or restrictions |
+|---|---|---|
+| | | |
+| | | |
 
 ## 4. Core user journey
 
-Describe the single most important journey from the user's starting point to a useful outcome. Include important decisions, failure paths, and what the user sees.
+The single most important journey, as numbered steps from start to useful outcome. Include what the user sees and the main failure path.
+
+1.
+2.
+3.
+
+## 5. Must-have requirements
+
+Observable, testable behaviors required for this delivery.
+
+| ID | Requirement / behavior | Acceptance condition |
+|---|---|---|
+| FR-001 | | |
+| FR-002 | | |
+| FR-003 | | |
+
+## 6. Explicitly out of scope
+
+-
+-
+
+## 7. Business rules
+
+Rules that cannot be inferred from generic practice: eligibility, approvals, calculations, workflow conditions, data visibility, domain constraints.
+
+-
+-
+
+## 8. Hard constraints
+
+Mandated technologies, allowed services, budget, deployment restrictions, team size, other hard limits.
+
+-
+
+## 9. Project-specific acceptance criteria
+
+These are in addition to the default criteria at the end of this file.
+
+-
+-
+
+**Part A ready for planning:** [ ]
+
+---
+
+# Part B: Detail (fill when relevant; blank sections are treated as `Claude proposes`)
+
+## 10. Context
+
+How the problem is handled today and what is slow, difficult, expensive, unreliable, or missing.
 
 _Write here:_
 
-### Additional journeys
+## 11. Additional journeys
 
 | Journey | Priority | Brief description |
 |---|---|---|
-| | [ ] Must-have [ ] Later | |
-| | [ ] Must-have [ ] Later | |
+| | [ ] Must [ ] Later | |
 
-## 5. Functional requirements
-
-List observable behaviors that can be tested.
+## 12. Further requirements
 
 | ID | Requirement / behavior | Priority | Acceptance condition |
 |---|---|---|---|
-| FR-001 | | [ ] Must [ ] Should [ ] Could | |
-| FR-002 | | [ ] Must [ ] Should [ ] Could | |
-| FR-003 | | [ ] Must [ ] Should [ ] Could | |
+| FR-101 | | [ ] Should [ ] Could | |
 
-## 6. MVP scope
-
-### Must have
-- [ ]
-- [ ]
-- [ ]
-
-### Nice to have, only if time allows
-- [ ]
-- [ ]
-- [ ]
-
-### Explicitly out of scope
-- [ ]
-- [ ]
-- [ ]
-
-## 7. Business rules and project-specific behavior
-
-Capture rules that cannot safely be inferred from generic engineering practice, such as eligibility, approval rules, calculations, workflow conditions, data visibility, or domain-specific constraints.
-
-_Write here:_
-
-## 8. Data and information
+## 13. Data and information
 
 | Information / entity | What it represents | Source | Sensitivity / access notes |
 |---|---|---|---|
 | | | | |
-| | | | |
 
-- **Existing data to migrate or import:**
-- **External or third-party data sources:**
+- **Existing data to import or migrate:**
 - **Data retention / deletion requirements:**
-- **Important data quality constraints:**
+- **Data quality constraints:**
 
-## 9. Non-functional expectations
+## 14. Non-functional expectations
 
-- **Availability:** [ ] Best effort / demo [ ] Business hours [ ] High availability [ ] Other:
-- **Performance:** [ ] Normal interactive [ ] Low latency [ ] High throughput [ ] Other:
-- **Scale:** [ ] Single user [ ] Small team [ ] Multi-tenant / many users [ ] Other:
-- **Accessibility:** [ ] Basic [ ] Target a named standard: [ ] Not in scope for MVP
-- **Auditability:** [ ] Basic logs [ ] Traceable user actions [ ] Formal audit trail [ ] Other:
+- **Availability (one):** [ ] Best effort / demo [ ] Business hours [ ] High availability [ ] Other:
+- **Performance (one):** [ ] Normal interactive [ ] Low latency [ ] High throughput [ ] Other:
+- **Scale (one):** [ ] Single user [ ] Small team [ ] Many users / multi-tenant [ ] Other:
+- **Accessibility (one):** [ ] Basic [ ] Named standard: [ ] Not in scope
+- **Auditability (one):** [ ] Basic logs [ ] Traceable user actions [ ] Formal audit trail [ ] Other:
 - **Privacy / compliance needs:**
-- **Reliability expectations:**
 - **Other quality requirements:**
 
-## 10. Constraints and assumptions
+## 15. Assumptions to validate
 
-### Constraints
-Include deadline, team size, budget, allowed services, required technologies, deployment restrictions, and other hard limits.
+-
 
-_Write here:_
+## 16. Open questions
 
-### Assumptions
-List assumptions that need validation.
-- 
-- 
-- 
-
-## 11. Acceptance criteria
-
-- [ ] The primary user journey works end to end.
-- [ ] Must-have requirements are met or explicitly deferred by the user.
-- [ ] Critical failure paths have been tested.
-- [ ] Required permissions and data boundaries work as designed.
-- [ ] Relevant automated tests pass.
-- [ ] Manual testing is completed by the user.
-- [ ] Known limitations and unfinished work are documented.
-- [ ] Demo / handoff instructions are usable.
-
-### Additional project-specific acceptance criteria
-- [ ]
-- [ ]
-- [ ]
-
-## 12. Open questions
-
-| Question | Why it matters | Owner | Status |
-|---|---|---|---|
-| | | | [ ] Open [ ] Resolved |
+| Question | Why it matters | Status |
+|---|---|---|
+| | | [ ] Open [ ] Resolved |
 
 ---
 
-**Director sign-off:** [ ] This project definition is ready to be used for planning.
+## Default acceptance criteria
 
-A sign-off confirms that this document is ready for planning. It does not automatically approve Claude's implementation plan.
+These apply to every project unless you remove them. `CLOSE PROJECT` verifies them against the delivery profile.
+
+- The core user journey works end to end.
+- Must-have requirements are met, or explicitly deferred by the user.
+- Critical failure paths are tested.
+- Required permissions and data boundaries work as designed.
+- Automated tests required by the delivery profile pass.
+- The user has completed manual testing.
+- Known limitations and unfinished work are documented.
+- Run and demo instructions are usable.

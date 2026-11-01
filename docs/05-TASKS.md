@@ -1,68 +1,68 @@
-# 05. Task Backlog and Progress
+# 05. Current State, Tasks, and Feedback
 
-> **Ownership:** Shared by user and Claude Code. Track only approved implementation work and keep status truthful.
+> **Ownership:** Shared by the user and Claude Code. Keep every status truthful. Claude reads "Current state" at the start of every session.
+
+## Current state
+
+- **Phase:** [ ] Design [ ] Planning [ ] Implementing [ ] Reviewing [ ] Closing
+- **Plan version and status:**
+- **Active task(s):**
+- **Last accepted commit:**
+- **Waiting on:** _For example: user approval of plan v1, review of TASK-002._
+- **Next step:**
 
 ## Status definitions
 
-- **Proposed:** Suggested but not approved.
-- **Approved:** User explicitly authorized the task.
+- **Proposed:** Suggested by Claude; not approved.
+- **Approved:** The user explicitly authorized it; the approval is recorded.
 - **In progress:** Implementation has started.
-- **Blocked:** Work cannot safely continue; reason is recorded.
-- **Review needed:** Implementation is ready for review.
-- **Done:** Acceptance criteria and required checks are satisfied.
-- **Deferred:** User chose to postpone the task.
+- **Blocked:** Cannot safely continue; the reason is recorded.
+- **Review needed:** Implemented and verified by Claude; waiting for review and acceptance.
+- **Done:** The user accepted it and the change is committed.
+- **Deferred:** The user postponed it.
 
 ## Task list
 
-| ID | Task | Priority | Status | Dependencies | Acceptance criteria |
-|---|---|---|---|---|---|
-| TASK-001 | | [ ] Must [ ] Should [ ] Could | Proposed | | |
-| TASK-002 | | [ ] Must [ ] Should [ ] Could | Proposed | | |
-| TASK-003 | | [ ] Must [ ] Should [ ] Could | Proposed | | |
+| ID | Task | Milestone | Requirement(s) | Status | Depends on | Acceptance criteria | Approval |
+|---|---|---|---|---|---|---|---|
+| TASK-001 | | M1 | | Proposed | | | |
+| TASK-002 | | M1 | | Proposed | | | |
 
-## Active task detail
+The **Approval** column holds `Approved (chat, YYYY-MM-DD): <summary>` once the user approves the plan, the task, or the fix. Claude fills it only from an explicit user approval.
 
-Copy this section for an active task when more detail is useful.
+### Verification notes
 
-### TASK-XXX: Task title
+Record checks per task. For the Prototype profile, one line per task is enough.
 
-- **Status:**
-- **Approved by / date:**
-- **Related requirement(s):**
-- **Scope:**
-- **Out of scope:**
-- **Dependencies:**
+| Task | Check | Command / method | Result | Notes |
+|---|---|---|---|---|
+| | | | Pass / Fail / Not run | |
 
-#### Acceptance criteria
-- [ ]
-- [ ]
-- [ ]
+## Feedback log
 
-#### Implementation notes
-_Write here:_
+| ID | Date | Observation (summary) | Type | Proposed correction | Related task | Status | Approval |
+|---|---|---|---|---|---|---|---|
+| FB-001 | | | | | | Proposed | |
 
-#### Verification
+**Type:** Bug · Missing requirement · Usability · Performance / reliability · Design change · New scope
+**Status:** Proposed · Approved · Rejected · Fixed · Deferred
 
-| Check | Command / method | Result | Evidence / notes |
-|---|---|---|---|
-| | | [ ] Pass [ ] Fail [ ] Not run | |
+## Task detail (Production candidate, or when useful)
 
-#### Progress log
+Copy for a task that needs more than a table row.
 
-| Date | Update |
-|---|---|
-| | |
+### TASK-XXX: Title
 
-#### Review and closure
-- **Review status:** [ ] Not reviewed [ ] Findings open [ ] Accepted
+- **Scope / out of scope:**
+- **Related requirement(s) and design sections:**
+- **Implementation notes:**
 - **Known limitations:**
-- **Completed date:**
+- **Progress log:**
 
 ## Rules
 
-- Only user-approved tasks may be marked `Approved` or `In progress`.
-- Claude may propose tasks, but must not approve them.
-- Implement one task at a time unless the user explicitly approves a batch.
-- Keep task scope and acceptance criteria specific.
-- Do not mark a task `Done` if required tests were not run, acceptance criteria are unmet, or unresolved blockers remain.
-- Record deferred work rather than silently expanding the current task.
+- Claude may propose tasks and fixes but never approves them.
+- Implement one task at a time unless the user approves a batch.
+- Keep scope and acceptance criteria specific. Record new work as a proposed task or a feedback item rather than expanding the current task.
+- Mark `Done` only after the user accepts the task and the change is committed. Never mark `Done` while required checks were not run, acceptance criteria are unmet, or blockers remain.
+- Update "Current state" whenever the phase, active task, or next step changes.
