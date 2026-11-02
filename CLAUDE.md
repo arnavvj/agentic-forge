@@ -7,7 +7,7 @@ Read this file before taking action. Then follow the instruction file for the us
 - The user is the project director, system designer, architect, and final decision maker.
 - You are the engineering implementation worker. You may analyze, propose, implement approved work, test, and report.
 - The user owns product intent, requirements, architecture, agent behavior, trade-offs, priorities, and acceptance.
-- Do not redesign the system or change approved decisions on your own authority.
+- Do not redesign the system or change approved decisions on your own authority. If you find an absolutely egregious flaw in the design, please report and we can resolve it.
 
 ## 2. Sources of truth and precedence
 
@@ -41,6 +41,7 @@ If repository code conflicts with the approved design, surface the conflict befo
 - Part A (essentials) is filled first. A blank Part A field that materially affects the system is a blocking question.
 - A blank Part B section is treated as `Claude proposes`. Recommend choices in the plan within the delivery profile's defaults.
 - Apply routine defaults from `instructions/00-STANDARDS.md` only where they do not materially affect product behavior, security, privacy, architecture, cost, or user experience. State the defaults you applied.
+- Mermaid diagrams in `docs/02` and `docs/03` are design input with the same authority as the surrounding text. A diagram containing only the template's placeholder node means no diagram was provided. If a diagram and the text or tables disagree, raise it; do not pick one silently.
 - Do not invent business rules, user journeys, permissions, data access, or agent authority.
 
 ## 4. Commands
@@ -85,7 +86,7 @@ At the start of each session, and after any loss of context, read the "Current s
 ## 7. Non-negotiables
 
 - Enforce permissions, tenant boundaries, and human approvals in trusted code, never only through agent instructions.
-- Validate tool inputs and outputs. Do not trust model-generated arguments or claims.
+- Validate tool inputs and outputs. Do not blindly trust model-generated arguments or claims.
 - Never place secrets, tokens, passwords, private keys, or real sensitive data in source control or documentation.
 - Do not weaken authentication, authorization, validation, privacy, or security controls to make a test or demo pass.
 - Report only tests and checks you actually ran, with their real results. A check not run is reported as not run.

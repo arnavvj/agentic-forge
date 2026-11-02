@@ -38,6 +38,23 @@ List the main steps. Use code for fixed logic and a model only for judgment or l
 
 **Why this structure:**
 
+### Agent architecture diagram (optional, recommended)
+
+Replace the placeholder with a Mermaid diagram of the inside of the agent service: entry point, agents (or the single agent), tools, data they touch, human approval gates, handoffs, and the final output. It should match the agent cards (section 4) and the tools table (section 5). For multi-agent designs, show branch and handoff conditions on the arrows.
+
+```mermaid
+%% Example (delete or replace):
+%% flowchart TD
+%%   IN[Request from backend] --> AG[Triage agent]
+%%   AG -->|lookup_order: read| ORD[(Orders)]
+%%   AG -->|draft| GATE{{Human approval}}
+%%   GATE -->|approved| SEND[send_reply: consequential]
+%%   GATE -->|rejected| OUT[Return draft with reason]
+%%   AG -->|limit reached| OUT
+flowchart TD
+  PLACEHOLDER[Replace with your agent architecture diagram]
+```
+
 ## 4. Agents
 
 One card per agent. A single-agent system has one card. Copy the card for each additional agent.
@@ -93,12 +110,9 @@ Actions the system must never take, regardless of instructions or content.
 - **Result aggregation:** [ ] Supervisor synthesis [ ] Passed to next agent [ ] Parallel merge [ ] Voting / consensus [ ] Rule-based selection [ ] Human selection [ ] Other:
 - **Dynamic agent creation (one):** [ ] Not allowed [ ] Allowed within limits
 
-**Flow, including branch and handoff conditions:**
+**Flow, including branch and handoff conditions:** add them to the agent architecture diagram in section 3, or describe any that the diagram does not show:
 
-```text
-Entry point -> routing / coordinator -> agents -> aggregation -> final response or action.
-Replace with the actual flow or a Mermaid diagram.
-```
+_Write here:_
 
 ## 10. Handoff contracts (Multi-agent)
 

@@ -85,6 +85,15 @@ These are natural-language conventions defined in `CLAUDE.md`, not built-in Clau
 
 A blank Part B section is treated as `Claude proposes`. Routine, non-material details use the defaults in `instructions/00-STANDARDS.md`. Claude lists every default it applied in the plan.
 
+### Diagrams
+
+Draw your designs as **Mermaid** diagrams directly in the templates. Each file has a placeholder block to replace:
+
+- `02-DESIGN_SOFTWARE.md`, section 1: the overall software architecture (clients, services, agent service, data stores, integrations).
+- `03-DESIGN_AGENT_WORKFLOW.md`, section 3: the agent architecture inside the agent service (agents, tools, data, approval gates, handoffs).
+
+Diagrams carry the same authority as the text. At `START`, Claude checks them against the text and tables and raises any mismatch. Mermaid renders natively on GitHub. In VS Code, install **Markdown Preview Mermaid Support** (`bierner.markdown-mermaid`) to see the diagrams in the built-in markdown preview.
+
 ### Delivery profile
 
 Choose **Prototype**, **MVP**, or **Production candidate** in `01-PROJECT.md`. The profile sets the default depth of testing, evaluation, records, observability, and infrastructure, and the target readiness at close. To harden later, change the profile and say `REPLAN`. The `CLOSE PROJECT` hardening gap list feeds that plan.

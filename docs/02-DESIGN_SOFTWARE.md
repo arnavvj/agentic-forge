@@ -13,9 +13,26 @@
 
 ## 1. System summary
 
-In 2–4 sentences: the major components and how a request and its data move through the system.
+In 2–4 sentences: the major components and how a request and its data move through the system. If you provide the diagram below, one or two sentences are enough.
 
 _Write here:_
+
+### Architecture diagram (optional, recommended)
+
+Replace the placeholder with a Mermaid diagram of the overall system: clients, services (including the agent service), data stores, external integrations, and the main request flow. Label the arrows with the protocol or purpose. The agent's internal structure belongs in `03-DESIGN_AGENT_WORKFLOW.md`, section 3.
+
+```mermaid
+%% Example (delete or replace):
+%% flowchart LR
+%%   UI[Web UI] -->|REST| API[Backend API]
+%%   API -->|run request| AGENT[Agent service]
+%%   API --> DB[(Primary database)]
+%%   AGENT -->|tool call| API
+%%   AGENT --> LLM[LLM provider]
+%%   API --> EXT[External integration]
+flowchart LR
+  PLACEHOLDER[Replace with your architecture diagram]
+```
 
 ## 2. Architecture style (one)
 
@@ -73,9 +90,7 @@ A short request does not need a durable workflow engine. Work that must survive 
 | Agent service (if separate) | | | |
 | Background worker (if any) | | | |
 
-```text
-Optional diagram or flow description.
-```
+Extend the architecture diagram in section 1 rather than adding a second one.
 
 ## 8. Frontend
 
