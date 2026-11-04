@@ -79,7 +79,7 @@ A short request does not need a durable workflow engine. Work that must survive 
 
 ---
 
-# Part B: Detail (fill when relevant; blank sections are treated as `Claude proposes`)
+# Part B: Detail (fill when relevant; blank fields use `00-REQUIREMENTS.md` answers, otherwise `Claude proposes`)
 
 ## 7. Components
 

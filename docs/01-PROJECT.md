@@ -77,7 +77,7 @@ These are in addition to the default criteria at the end of this file.
 
 ---
 
-# Part B: Detail (fill when relevant; blank sections are treated as `Claude proposes`)
+# Part B: Detail (fill when relevant; blank fields use `00-REQUIREMENTS.md` answers, otherwise `Claude proposes`)
 
 ## 10. Context
 

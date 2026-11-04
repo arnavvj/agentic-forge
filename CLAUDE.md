@@ -13,6 +13,7 @@ Read this file before taking action. Then follow the instruction file for the us
 
 Project documents:
 
+0. `docs/00-REQUIREMENTS.md`: raw requirements intake from the requirements round. User-owned.
 1. `docs/01-PROJECT.md`: what is being built and why. User-owned.
 2. `docs/02-DESIGN_SOFTWARE.md`: software architecture. User-owned.
 3. `docs/03-DESIGN_AGENT_WORKFLOW.md`: agent and workflow design. User-owned.
@@ -20,7 +21,7 @@ Project documents:
 5. `docs/05-TASKS.md`: current state, task backlog, and feedback log. Shared.
 6. `docs/06-DECISIONS.md`: decision log. Shared.
 
-Treat `docs/01` to `docs/03` as read-only unless the user explicitly asks you to edit them. Report gaps, ambiguities, conflicts, risks, or better alternatives as proposals. Never rewrite the design silently.
+Treat `docs/00` to `docs/03` as read-only unless the user explicitly asks you to edit them. Report gaps, ambiguities, conflicts, risks, or better alternatives as proposals. Never rewrite the design silently.
 
 When sources conflict, apply this order and surface the conflict:
 
@@ -28,7 +29,8 @@ When sources conflict, apply this order and surface the conflict:
 2. Approved decisions in `docs/06-DECISIONS.md`. A newer decision supersedes an older one, and supersedes the design documents on the specific point it covers.
 3. The design documents `docs/01` to `docs/03`. If `docs/01` conflicts with `docs/02` or `docs/03`, raise it.
 4. The approved plan and approved tasks.
-5. Established repository conventions, then `instructions/00-STANDARDS.md`. Security, authorization, and data-protection standards always apply unless the user explicitly accepts a recorded risk.
+5. The requirements intake `docs/00-REQUIREMENTS.md`. It is raw input; the curated design wins. Raise a conflict on a `Must` item rather than silently following the design.
+6. Established repository conventions, then `instructions/00-STANDARDS.md`. Security, authorization, and data-protection standards always apply unless the user explicitly accepts a recorded risk.
 
 If repository code conflicts with the approved design, surface the conflict before making a material change.
 
@@ -39,7 +41,8 @@ If repository code conflicts with the approved design, surface the conflict befo
 - `Claude proposes`: the user delegates the choice. Recommend an option in the plan. It is approved only when the plan is approved.
 - `N/A`: not applicable. `Later`: deliberately deferred; do not implement it now.
 - Part A (essentials) is filled first. A blank Part A field that materially affects the system is a blocking question.
-- A blank Part B section is treated as `Claude proposes`. Recommend choices in the plan within the delivery profile's defaults.
+- A blank Part B field takes the answer from `docs/00-REQUIREMENTS.md` when the intake gives one. Otherwise it is treated as `Claude proposes`: recommend a choice in the plan within the delivery profile's defaults.
+- Intake items marked `Later` or `N/A` are recorded, not built now.
 - Apply routine defaults from `instructions/00-STANDARDS.md` only where they do not materially affect product behavior, security, privacy, architecture, cost, or user experience. State the defaults you applied.
 - Mermaid diagrams in `docs/02` and `docs/03` are design input with the same authority as the surrounding text. A diagram containing only the template's placeholder node means no diagram was provided. If a diagram and the text or tables disagree, raise it; do not pick one silently.
 - Do not invent business rules, user journeys, permissions, data access, or agent authority.

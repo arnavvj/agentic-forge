@@ -6,7 +6,7 @@ Understand the user's design and the existing repository, then propose a focused
 
 ## Required reading
 
-`CLAUDE.md`, `instructions/00-STANDARDS.md`, `docs/01-PROJECT.md`, `docs/02-DESIGN_SOFTWARE.md`, `docs/03-DESIGN_AGENT_WORKFLOW.md`, `docs/05-TASKS.md`, `docs/06-DECISIONS.md`, any existing `docs/04-PLAN.md`, and relevant repository files: manifests, application code, tests, and existing documentation. Preserve useful existing content.
+`CLAUDE.md`, `instructions/00-STANDARDS.md`, `docs/00-REQUIREMENTS.md`, `docs/01-PROJECT.md`, `docs/02-DESIGN_SOFTWARE.md`, `docs/03-DESIGN_AGENT_WORKFLOW.md`, `docs/05-TASKS.md`, `docs/06-DECISIONS.md`, any existing `docs/04-PLAN.md`, and relevant repository files: manifests, application code, tests, and existing documentation. Preserve useful existing content.
 
 ## Procedure
 
@@ -15,16 +15,17 @@ Understand the user's design and the existing repository, then propose a focused
 3. Note any design document whose "Part A ready for planning" box is unchecked. Treat it as a draft, say so in the report, and still produce the plan.
 4. Summarize the problem, users, core journey, must-have requirements, architecture, and agentic design.
 5. Read the Mermaid diagrams: the architecture diagram in `docs/02` (section 1) and the agent architecture diagram in `docs/03` (section 3). Check that every component, agent, tool, data store, and approval gate they show matches the text and tables, and that components named in the text appear in the diagrams. Treat a mismatch as a blocking decision.
-6. Map requirements to the proposed implementation. Identify gaps, contradictions, security concerns, and technical risks.
+6. Map requirements to the proposed implementation. Identify gaps, contradictions, security concerns, and technical risks. Cross-check `docs/00-REQUIREMENTS.md` against Part A: a `Must` intake item that Part A and the plan do not cover, or that Part A contradicts, is a blocking decision. Map any intake row whose "Maps to" is blank, including the "Additional inputs" rows. An intake answer that no template field covers still applies: list it in the plan, citing the row.
 7. Classify each open item:
-   - **Blocking decision:** a blank or conflicting Part A item that materially affects architecture, security, data access, permissions, cost, or core behavior. List it under "Decisions needed".
-   - **Proposed choice:** a `Claude proposes` field or a blank Part B section. Recommend an option under "Proposed choices".
+   - **Blocking decision:** a blank or conflicting Part A item that materially affects architecture, security, data access, permissions, cost, or core behavior, or a `Must` intake gap or conflict. List it under "Decisions needed".
+   - **Intake answer:** a blank Part B field that the intake answers. Use the answer and list it under "Assumptions and routine defaults applied", citing the intake row (for example `S-C1`).
+   - **Proposed choice:** a `Claude proposes` field, or a blank Part B field the intake does not answer. Recommend an option under "Proposed choices".
    - **Routine default:** a non-material detail covered by `instructions/00-STANDARDS.md` or repository conventions. List it under "Assumptions and routine defaults applied".
 8. Recommend the smallest useful end-to-end vertical slice of the core journey as milestone M1.
 9. Propose milestones and small, testable tasks with dependencies and acceptance criteria. Size them so each can be reviewed as one coherent diff.
 10. Identify what can be mocked or deferred without misrepresenting the product.
 11. Define how critical requirements, failure paths, and agent behavior will be verified, at the depth the delivery profile requires.
-12. Write the plan to `docs/04-PLAN.md` with status `Proposed for approval`. Record the design baseline: the date, plus the commit if `docs/01` to `docs/03` are committed.
+12. Write the plan to `docs/04-PLAN.md` with status `Proposed for approval`. Record the design baseline: the date, plus the commit if `docs/00` to `docs/03` are committed.
 13. Write the tasks to `docs/05-TASKS.md` with status `Proposed`. Update "Current state" to Planning, waiting on plan approval.
 
 ## Planning principles
@@ -62,7 +63,7 @@ When the user explicitly approves the plan:
 
 Use this when the user has refined the design documents (typically after the first or second build iteration), changed the delivery profile, or asked for a hardening plan after `CLOSE PROJECT`.
 
-1. Re-read the design documents and compare them with the design baseline in the current plan. Use `git diff` where the baseline is a commit. Summarize what changed.
+1. Re-read the requirements intake and the design documents and compare them with the design baseline in the current plan. Use `git diff` where the baseline is a commit. Summarize what changed.
 2. Re-read the task list, the feedback log, and the decisions.
 3. Identify the impact on completed, in-progress, and proposed tasks. Note any completed work that now conflicts with the design.
 4. Propose the updated plan as a new version. Set the previous version to `Superseded`, or update it in place with a version note if the change is small.

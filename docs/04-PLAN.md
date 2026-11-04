@@ -11,7 +11,7 @@
 - **Plan version / date:**
 - **Supersedes:**
 - **Delivery profile:**
-- **Design baseline:** _Date and commit (if committed) of `docs/01` to `docs/03` this plan is based on._
+- **Design baseline:** _Date and commit (if committed) of `docs/00` to `docs/03` this plan is based on._
 
 ### Outcome
 The working result this plan delivers.
@@ -35,13 +35,15 @@ Blocking items only: material gaps, conflicts, or risks the user must resolve.
 
 ## 4. Proposed choices
 
-Choices delegated by `Claude proposes` or blank Part B sections. They are approved together with the plan unless the user changes them.
+Choices delegated by `Claude proposes`, or blank Part B fields the requirements intake does not answer. They are approved together with the plan unless the user changes them.
 
 | Area | Proposal | Reason |
 |---|---|---|
 | | | |
 
 ## 5. Assumptions and routine defaults applied
+
+Include intake answers used for blank Part B fields, citing the intake row.
 
 -
 

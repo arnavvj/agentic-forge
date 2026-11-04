@@ -2,7 +2,7 @@
 
 > **Ownership:** Shared record. The user is the final decision maker. Record material product, architecture, data, security, agent, and scope decisions.
 >
-> An approved decision supersedes the design documents (`docs/01` to `docs/03`) on the specific point it covers. The user may update the design document later to match.
+> An approved decision supersedes the requirements intake and the design documents (`docs/00` to `docs/03`) on the specific point it covers. The user may update the design document later to match.
 
 ## Decision register
 

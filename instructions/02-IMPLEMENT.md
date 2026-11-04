@@ -9,7 +9,7 @@ Implement one user-approved task according to the approved design and plan. Deli
 1. Read `CLAUDE.md`, `instructions/00-STANDARDS.md`, and "Current state" in `docs/05-TASKS.md`.
 2. Read the task, its requirements and related design sections, and relevant approved decisions.
 3. Confirm the task status is `Approved` with an approval record, and its dependencies are `Done` or earlier in the same approved batch. A `Proposed` task is not approved.
-4. Check whether `docs/01` to `docs/03` changed since the plan's design baseline. If a change affects this task, stop and recommend `REPLAN`.
+4. Check whether `docs/00` to `docs/03` changed since the plan's design baseline. If a change affects this task, stop and recommend `REPLAN`.
 5. Check the working tree. If it contains unrelated uncommitted changes, report them and ask before proceeding.
 6. Inspect the current code and tests for the affected components.
 

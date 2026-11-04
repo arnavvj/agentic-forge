@@ -19,6 +19,7 @@ agentic-forge/
 ├── README.md                         This guide (toolkit only; do not copy)
 ├── CLAUDE.md                         Claude's working agreement, precedence, commands, approvals
 ├── docs/
+│   ├── 00-REQUIREMENTS.md            You: raw requirements intake from the requirements round
 │   ├── 01-PROJECT.md                 You: problem, users, journey, requirements, delivery profile
 │   ├── 02-DESIGN_SOFTWARE.md         You: architecture, stack, identity, integrations, execution
 │   ├── 03-DESIGN_AGENT_WORKFLOW.md   You: agents, tools, limits, safety, evaluation
@@ -45,6 +46,7 @@ agentic-forge/
 
 | When | You | Claude |
 |---|---|---|
+| **Requirements round** (before the build clock) | Answer the questions in `docs/00-REQUIREMENTS.md`, with notes and a priority per item. Pasting from a spreadsheet is fine. | — |
 | **0–20 min** | Fill **Part A** of `01`, `02`, and `03`. Mark anything you don't want to decide as `Claude proposes`. Say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
 | | Resolve the blocking decisions. Say `APPROVE PLAN`. | Records the approval, marks the tasks approved. |
 | **Iteration 1** | `IMPLEMENT TASK-001` (or `IMPLEMENT M1`), then `REVIEW TASK-001`, then `ACCEPT TASK-001`. | Implements, tests, and reports; reviews the diff; commits on acceptance. |
@@ -83,7 +85,7 @@ These are natural-language conventions defined in `CLAUDE.md`, not built-in Clau
 | `N/A` | Not applicable. |
 | `Later` | Deliberately deferred. Claude will not implement it now. |
 
-A blank Part B section is treated as `Claude proposes`. Routine, non-material details use the defaults in `instructions/00-STANDARDS.md`. Claude lists every default it applied in the plan.
+A blank Part B field takes the answer from `docs/00-REQUIREMENTS.md` if the intake has one; otherwise it is treated as `Claude proposes`. The intake is raw input: where it conflicts with Part A, your design wins, and Claude raises any conflict or gap on a `Must` item at `START`. Routine, non-material details use the defaults in `instructions/00-STANDARDS.md`. Claude lists every default it applied in the plan.
 
 ### Diagrams
 
