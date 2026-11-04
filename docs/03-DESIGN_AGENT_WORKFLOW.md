@@ -55,6 +55,15 @@ flowchart TD
   PLACEHOLDER[Replace with your agent architecture diagram]
 ```
 
+### Build scope
+
+Same rules as the build scope table in `02-DESIGN_SOFTWARE.md`, section 1: agents, tools, data stores, and approval gates by their diagram names. Colours are only visual; a component not listed is proposed by Claude in the plan.
+
+| Component | Scope (one) | Notes |
+|---|---|---|
+| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+
 ## 4. Agents
 
 One card per agent. A single-agent system has one card. Copy the card for each additional agent.
@@ -92,6 +101,8 @@ Actions the system must never take, regardless of instructions or content.
 -
 
 ## 8. Agentic scope
+
+Capabilities beyond the components in the section 3 build scope table.
 
 - **Required now:**
 - **Later:**

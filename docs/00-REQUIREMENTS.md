@@ -5,9 +5,9 @@
 > **Two parts:** **Part 1, Requirements** holds what the interviewer or stakeholder told you. **Part 2, Systems Design** holds your own design calls on the same topics. If you're unsure where something goes, put it in Part 1.
 >
 > **How to fill:** Answer during the requirements round. Pasting from a spreadsheet is fine; tab-separated text or bullets are read the same as a table. An item's text is only a prompt: tools named in it (for example Presidio) are not choices until the **Answer / Notes** column says so.
-> **Priority:** `Must` · `Should` · `Later` (record, don't build now) · `N/A`
+> **Priority:** `P1` (must have) · `P2` (should have; build if time allows) · `P3` (later; record, don't build now) · `N/A`
 >
-> **How Claude uses it:** Part A and the design documents (`01` to `03`) are your curated design and win on conflict. Claude raises a conflict on a `Must` item, and a `Must` item that Part A and the plan don't cover. A blank Part B field takes the intake answer here before falling back to `Claude proposes`. **Maps to** shows the template section each answer feeds; Claude maps a row whose **Maps to** is blank.
+> **How Claude uses it:** Part A and the design documents (`01` to `03`) are your curated design and win on conflict. Claude raises a conflict on a `P1` item, and a `P1` item that Part A and the plan don't cover. A blank Part B field takes the intake answer here before falling back to `Claude proposes`. **Maps to** shows the template section each answer feeds; Claude maps a row whose **Maps to** is blank.
 
 ## Adding inputs not listed here
 
@@ -145,7 +145,7 @@
 
 | # | Item | Answer / Notes | Priority | Maps to |
 |---|---|---|---|---|
-| S-H1 | Which of these components to include in the demo | | | 01 §6, §9; 03 §8 |
+| S-H1 | Which of these components to include in the demo | | | 02 §1; 03 §3, §8; 01 §6, §9 |
 
 ---
 

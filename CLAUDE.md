@@ -29,7 +29,7 @@ When sources conflict, apply this order and surface the conflict:
 2. Approved decisions in `docs/06-DECISIONS.md`. A newer decision supersedes an older one, and supersedes the design documents on the specific point it covers.
 3. The design documents `docs/01` to `docs/03`. If `docs/01` conflicts with `docs/02` or `docs/03`, raise it.
 4. The approved plan and approved tasks.
-5. The requirements intake `docs/00-REQUIREMENTS.md`. It is raw input; the curated design wins. Raise a conflict on a `Must` item rather than silently following the design.
+5. The requirements intake `docs/00-REQUIREMENTS.md`. It is raw input; the curated design wins. Raise a conflict on a `P1` item rather than silently following the design.
 6. Established repository conventions, then `instructions/00-STANDARDS.md`. Security, authorization, and data-protection standards always apply unless the user explicitly accepts a recorded risk.
 
 If repository code conflicts with the approved design, surface the conflict before making a material change.
@@ -42,9 +42,10 @@ If repository code conflicts with the approved design, surface the conflict befo
 - `N/A`: not applicable. `Later`: deliberately deferred; do not implement it now.
 - Part A (essentials) is filled first. A blank Part A field that materially affects the system is a blocking question.
 - A blank Part B field takes the answer from `docs/00-REQUIREMENTS.md` when the intake gives one. Otherwise it is treated as `Claude proposes`: recommend a choice in the plan within the delivery profile's defaults.
-- Intake items marked `Later` or `N/A` are recorded, not built now.
+- Intake items marked `P2` are planned after `P1` work, in later milestones. Items marked `P3` or `N/A` are recorded, not built now.
 - Apply routine defaults from `instructions/00-STANDARDS.md` only where they do not materially affect product behavior, security, privacy, architecture, cost, or user experience. State the defaults you applied.
 - Mermaid diagrams in `docs/02` and `docs/03` are design input with the same authority as the surrounding text. A diagram containing only the template's placeholder node means no diagram was provided. If a diagram and the text or tables disagree, raise it; do not pick one silently.
+- The build scope tables in `docs/02` section 1 and `docs/03` section 3 decide what is built now; diagram colours do not. Build only `Build` and `Mock` components. Treat `Later` and `Out of scope` components as design context: do not build them, and do not ask about their missing detail. Propose a scope for any diagram component not listed. If a scope conflicts with a `P1` intake row or a Part A requirement, raise it as a blocking decision.
 - Do not invent business rules, user journeys, permissions, data access, or agent authority.
 
 ## 4. Commands

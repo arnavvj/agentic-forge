@@ -34,6 +34,17 @@ flowchart LR
   PLACEHOLDER[Replace with your architecture diagram]
 ```
 
+### Build scope
+
+Draw the full design; this table says what gets built now. List diagram components by the names shown in the diagram. Colours in the diagram are only visual; scope comes from this table.
+
+| Component | Scope (one) | Notes |
+|---|---|---|
+| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+
+**Build:** implement for real. **Mock:** a stub behind the real interface, replaceable later. **Later:** design context only; not built now, but nothing built may block it. **Out of scope:** not part of this project. A component not listed here is proposed by Claude in the plan.
+
 ## 2. Architecture style (one)
 
 - [ ] Modular monolith

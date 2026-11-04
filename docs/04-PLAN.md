@@ -25,6 +25,14 @@ _Write here:_
 - **Agentic design:**
 - **Repository state:**
 
+### Build scope
+
+Every component in the `docs/02` and `docs/03` diagrams. Rows with source "Claude proposes" are approved with the plan unless the user changes them.
+
+| Component | Diagram (`02` / `03`) | Scope | Source |
+|---|---|---|---|
+| | | Build · Mock · Later · Out of scope | Design table · Intake row · Claude proposes |
+
 ## 3. Decisions needed before implementation
 
 Blocking items only: material gaps, conflicts, or risks the user must resolve.
