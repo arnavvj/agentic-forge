@@ -47,7 +47,7 @@ agentic-forge/
 | When | You | Claude |
 |---|---|---|
 | **Requirements round** (before the build clock) | Answer the questions in `docs/00-REQUIREMENTS.md`, with notes and a priority per item. Pasting from a spreadsheet is fine. | — |
-| **0–20 min** | Fill **Part A** of `01`, `02`, and `03`. Mark anything you don't want to decide as `Claude proposes`. Say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
+| **0–20 min** | Fill **Part A** of `01`, `02`, and `03`, including the build scope tables and the repository layout (paste a prepared tree). Mark anything you don't want to decide as `Claude proposes`. Say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
 | | Resolve the blocking decisions. Say `APPROVE PLAN`. | Records the approval, marks the tasks approved. |
 | **Iteration 1** | `IMPLEMENT TASK-001` (or `IMPLEMENT M1`), then `REVIEW TASK-001`, then `ACCEPT TASK-001`. | Implements, tests, and reports; reviews the diff; commits on acceptance. |
 | **By ~1 hour** | Run the app, test it manually, give `FEEDBACK: ...`. Refine **Part B** and Part A from what you learned. Say `REPLAN`. | Logs the feedback, proposes fixes, diffs the design changes, proposes plan v2. |

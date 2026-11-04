@@ -21,7 +21,7 @@ Understand the user's design and the existing repository, then propose a focused
    - **Intake answer:** a blank Part B field that the intake answers. Use the answer and list it under "Assumptions and routine defaults applied", citing the intake row (for example `S-C1`).
    - **Proposed choice:** a `Claude proposes` field, or a blank Part B field the intake does not answer. Recommend an option under "Proposed choices".
    - **Routine default:** a non-material detail covered by `instructions/00-STANDARDS.md` or repository conventions. List it under "Assumptions and routine defaults applied".
-8. Recommend the smallest useful end-to-end vertical slice of the core journey as milestone M1, using only `Build` and `Mock` components.
+8. Recommend the smallest useful end-to-end vertical slice of the core journey as milestone M1, using only `Build` and `Mock` components. Read the repository layout in `docs/02` section 3: check that every `Build` and `Mock` component has a folder, and state in the plan which folders M1 creates. If the layout is `Open to suggestions` or blank, propose changes or a layout under "Proposed choices"; if it is `Fixed`, a component without a folder is a blocking decision.
 9. Propose milestones and small, testable tasks with dependencies and acceptance criteria. Size them so each can be reviewed as one coherent diff.
 10. Identify what can be mocked or deferred without misrepresenting the product.
 11. Define how critical requirements, failure paths, and agent behavior will be verified, at the depth the delivery profile requires.

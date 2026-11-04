@@ -19,7 +19,7 @@ If the task is not approved, is ambiguous, or conflicts with the approved design
 
 1. Set the task to `In progress` and update "Current state".
 2. Restate the scope and acceptance criteria briefly.
-3. Make the smallest set of changes that satisfies them, following repository conventions and the approved architecture.
+3. Make the smallest set of changes that satisfies them, following repository conventions, the approved architecture, and the repository layout in `docs/02` section 3. Do not add a folder the layout lacks without approval.
 4. Add or update tests for changed behavior, including important error and permission paths, at the depth the delivery profile requires. For agent behavior, add or run the relevant eval cases.
 5. Run the available formatters, linters, type checks, and tests that apply.
 6. Inspect the full diff for unintended changes, secrets, debug code, and generated files.

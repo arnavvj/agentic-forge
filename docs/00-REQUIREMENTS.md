@@ -118,8 +118,9 @@
 | S-E1 | Resumable chats: conversation history | | | 03 §15 |
 | S-E2 | Resumable chats: in-session state | | | 03 §16 |
 | S-E3 | Resumable chats: episodic long-term summary | | | 03 §15 |
-| S-E4 | Data model specification | | | 01 §13; 02 §10 |
-| S-E5 | Data retention policy | | | 01 §13; 02 §15; 03 §15 |
+| S-E4 | Resumable chats: procedural memory | | | 03 §15 |
+| S-E5 | Data model specification | | | 01 §13; 02 §10 |
+| S-E6 | Data retention policy | | | 01 §13; 02 §15; 03 §15 |
 
 ## F. Middleware
 

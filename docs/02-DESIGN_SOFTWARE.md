@@ -65,6 +65,30 @@ Draw the full design; this table says what gets built now. List diagram componen
 | Hosting / run target | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
 | Other | | [ ] Fixed [ ] Open to suggestions [ ] Claude proposes |
 
+### Repository layout
+
+- **Flexibility (one):** [ ] Fixed [ ] Open to suggestions [ ] Claude proposes
+
+Paste your folder tree, one folder per line with a short purpose. Lines starting with `#` are an example and are ignored; delete them or write your tree below them. **Fixed:** Claude uses exactly this tree and asks before adding a top-level or `src/` folder. **Open to suggestions:** Claude may propose changes in the plan.
+
+```text
+# frontend/
+#   src/                      UI
+#   tests/
+# backend/
+#   src/
+#     api/                    routes / handlers, API versioning
+#     agents/                 agents, tools, prompts, orchestration
+#     middleware/             auth / RBAC, rate limit, retries, cache
+#     persistence/            models, repositories, migrations
+#     observability/          logging, tracing, metrics
+#     core/                   config, settings, shared utilities
+#   tests/                    mirrors src/: unit/, agent/, retrieval/, tool/
+# deploy/                     docker-compose, gateway config, Dockerfiles
+# .env.example
+# README.md
+```
+
 ## 4. Identity and access
 
 - **Authentication (one):** [ ] None for local demo [ ] Email / password [ ] OAuth / social [ ] Enterprise SSO [ ] Managed identity provider [ ] Other:
