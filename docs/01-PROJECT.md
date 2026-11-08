@@ -65,6 +65,7 @@ Rules that cannot be inferred from generic practice: eligibility, approvals, cal
 Mandated technologies, allowed services, budget, deployment restrictions, team size, other hard limits.
 
 -
+- **Provided data and assets** (what, and where in the repository):
 
 ## 9. Project-specific acceptance criteria
 

@@ -69,7 +69,7 @@ Draw the full design; this table says what gets built now. List diagram componen
 
 - **Flexibility (one):** [ ] Fixed [ ] Open to suggestions [ ] Claude proposes
 
-Paste your folder tree, one folder per line with a short purpose. Lines starting with `#` are an example and are ignored; delete them or write your tree below them. **Fixed:** Claude uses exactly this tree and asks before adding a top-level or `src/` folder. **Open to suggestions:** Claude may propose changes in the plan.
+Paste your folder tree, one folder per line with a short purpose. Lines starting with `#` are an example and are ignored; delete them or write your tree below them. **Fixed:** Claude uses this tree and asks before adding a top-level or `src/` folder; subfolders inside listed folders are fine. **Open to suggestions:** Claude may propose changes in the plan.
 
 ```text
 # frontend/
@@ -84,6 +84,7 @@ Paste your folder tree, one folder per line with a short purpose. Lines starting
 #     observability/          logging, tracing, metrics
 #     core/                   config, settings, shared utilities
 #   tests/                    mirrors src/: unit/, agent/, retrieval/, tool/
+# data/                       provided and seed data (documents, golden set)
 # deploy/                     docker-compose, gateway config, Dockerfiles
 # .env.example
 # README.md

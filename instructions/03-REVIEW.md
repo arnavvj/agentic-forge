@@ -1,75 +1,37 @@
 # REVIEW: Inspect an Implementation
 
-## Objective
+Review a task or feedback fix against its acceptance criteria, the approved design, and the standards. Report actionable findings. Do not change code unless the user explicitly asks you to fix findings.
 
-Review a task's implementation against its acceptance criteria, the approved design, and the standards. Identify actionable findings. Do not modify code during a review unless the user explicitly asks you to fix findings.
-
-## Review inputs
-
-Read `CLAUDE.md`, `instructions/00-STANDARDS.md`, the task and its acceptance criteria, the related design sections and decisions, and the verification results. The diff under review is the uncommitted change against `HEAD` (`git diff HEAD`, plus untracked files). Read the affected code around the diff, not only the diff itself.
-
-Where practical, run the review in a fresh session or a separate reviewing agent, to reduce the bias of reviewing your own work.
+**Inputs:** the task and acceptance criteria, related design sections and decisions, verification results, and the uncommitted diff against `HEAD` (`git diff HEAD` plus untracked files). Read the affected code around the diff, not only the diff. Where practical, review in a fresh session or a separate agent to reduce self-review bias.
 
 ## Review dimensions
 
-### 1. Requirements and behavior
-- Does the change satisfy the task's acceptance criteria?
-- Are the expected journeys, edge cases, and failure paths handled?
-- Has scope changed without approval?
+1. **Requirements and behavior:** acceptance criteria met? Journeys, edge cases, and failure paths handled? Scope changed without approval?
+2. **Architecture and maintainability:** component boundaries and approved design respected? New abstractions and dependencies justified? Errors, state, and side effects handled clearly?
+3. **Security and data:** authentication and authorization enforced at trusted boundaries? Tenant, user, and resource boundaries preserved? Secrets or sensitive data exposed in logs, errors, prompts, or source control? Untrusted input (including retrieved content and tool output) handled safely?
+4. **Agents and tools (if applicable):** each agent within its card in `docs/03`? Tools permission-checked and validated in code, outside the model? Limits, timeouts, retries, idempotency, and partial failures handled? Handoff payloads validated and human approvals enforced in code? Relevant eval cases pass?
+5. **Tests:** critical behavior and failure paths covered at the profile's depth? Tests meaningful rather than coupled to implementation details? Required checks actually run?
+6. **UX and operations:** loading, progress, empty, error, and limit-reached states understandable? Logs sufficient to diagnose failures?
 
-### 2. Architecture and maintainability
-- Are component boundaries and the approved design respected?
-- Are new abstractions and dependencies justified?
-- Are errors, state, and side effects handled clearly?
+## Severity
 
-### 3. Security and data handling
-- Are authentication and authorization enforced at trusted boundaries?
-- Are tenant, user, and resource boundaries preserved?
-- Are secrets or sensitive data exposed in logs, errors, prompts, or source control?
-- Is untrusted input, including retrieved content and tool output, handled safely?
+- **Critical:** security, data-loss, unauthorized-action, or integrity risk. Blocks acceptance.
+- **High:** major requirement failure, or significant reliability or security issue. Blocks acceptance.
+- **Medium:** incorrect or incomplete behavior, maintainability issue, or important test gap.
+- **Low:** minor issue, limited impact.
+- **Informational:** observation or suggestion.
 
-### 4. Agent and tool behavior (when applicable)
-- Does each agent stay within its card in `docs/03-DESIGN_AGENT_WORKFLOW.md`?
-- Are tools permission-checked and validated in code, outside the model?
-- Are limits, timeouts, retries, idempotency, and partial failures handled?
-- Are handoff payloads validated, and are human approvals enforced in code?
-- Do the relevant eval cases pass?
+## Output and stop
 
-### 5. Tests and verification
-- Do tests cover critical behavior and failure paths at the depth the profile requires?
-- Are the tests meaningful rather than coupled to implementation details?
-- Were the required checks actually run?
+Per finding: severity, location, what is wrong, why it matters, recommended fix, and whether it blocks acceptance. Then: what was reviewed, test status, open questions, and the result (`Pass`, `Pass with follow-ups`, or `Changes required`). Prioritize; no speculative or style-only findings.
 
-### 6. User experience and operations
-- Are loading, progress, empty, error, and limit-reached states understandable?
-- Are logs sufficient to diagnose failures?
-
-## Finding severity
-
-- **Critical:** Security, data-loss, unauthorized-action, or integrity risk. Blocks acceptance.
-- **High:** Major requirement failure or significant reliability or security issue. Blocks acceptance.
-- **Medium:** Incorrect or incomplete behavior, a maintainability issue, or an important test gap.
-- **Low:** Minor issue with limited impact.
-- **Informational:** Observation or suggestion, not a blocker.
-
-## Output
-
-For each finding: severity, location, what is wrong, why it matters, the recommended correction, and whether it blocks acceptance. Then summarize what was reviewed, the test status, open questions, and the result: `Pass`, `Pass with follow-ups`, or `Changes required`.
-
-Prioritize. Avoid speculative findings and style-only comments.
-
-## Stop condition
-
-Present the findings and wait. Fix findings only when the user explicitly asks (for example "fix the High findings"). Fixes become part of the same uncommitted diff. Re-run the affected checks and review again as needed.
+Stop and wait. Fix findings only on explicit request (e.g. "fix the High findings"); fixes join the same uncommitted diff. Re-run affected checks and re-review as needed.
 
 ---
 
 ## Acceptance and commit (`ACCEPT TASK-XXX` or `ACCEPT FB-XXX`)
 
-When the user explicitly accepts a reviewed task, batch, or feedback fix:
-
-1. Confirm that no Critical or High findings remain open. If any remain, say so and ask before proceeding.
-2. Record the acceptance in `docs/05-TASKS.md` with an approval record summarizing the user's message: a task becomes `Done`; a feedback item becomes `Fixed`. Record any follow-ups as `Proposed` tasks.
-3. Commit the changes, including their documentation updates, following the git policy in `instructions/00-STANDARDS.md`: message `TASK-XXX: <title>` or `FB-XXX: <summary>`, current branch, no push.
-4. Update "Current state" with the commit and the next task.
-5. Report the commit hash and the next step.
+1. Confirm no Critical or High findings remain open; if any do, say so and ask before proceeding.
+2. `docs/04`: record the acceptance (`CLAUDE.md` section 5). A task becomes `Done`; a feedback item becomes `Fixed`. Add follow-ups as `Proposed` tasks.
+3. Commit the changes with their documentation updates, per the git policy (`00-STANDARDS.md` section 5).
+4. Update "Now" with the commit and next task. Report the commit hash and next step.

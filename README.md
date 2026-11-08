@@ -23,15 +23,13 @@ agentic-forge/
 │   ├── 01-PROJECT.md                 You: problem, users, journey, requirements, delivery profile
 │   ├── 02-DESIGN_SOFTWARE.md         You: architecture, stack, identity, integrations, execution
 │   ├── 03-DESIGN_AGENT_WORKFLOW.md   You: agents, tools, limits, safety, evaluation
-│   ├── 04-PLAN.md                    Claude proposes; you approve
-│   ├── 05-TASKS.md                   Shared: current state, tasks, feedback log
-│   └── 06-DECISIONS.md               Shared: decision log
+│   └── 04-BUILD.md                   Shared: now, plan, tasks, feedback, decisions (the one file you use during the build)
 └── instructions/
     ├── 00-STANDARDS.md               Delivery profiles, routine defaults, engineering and agent standards, git policy
     ├── 01-START.md                   START, APPROVE PLAN, REPLAN
     ├── 02-IMPLEMENT.md               IMPLEMENT (single task or batch)
     ├── 03-REVIEW.md                  REVIEW, ACCEPT
-    ├── 04-FEEDBACK.md                FEEDBACK, APPROVE FIX
+    ├── 04-FEEDBACK.md                FEEDBACK, APPROVE FIX, CHANGE
     └── 05-CLOSE.md                   CLOSE PROJECT
 ```
 
@@ -47,10 +45,10 @@ agentic-forge/
 | When | You | Claude |
 |---|---|---|
 | **Requirements round** (before the build clock) | Answer the questions in `docs/00-REQUIREMENTS.md`, with notes and a priority per item. Pasting from a spreadsheet is fine. | — |
-| **0–20 min** | Fill **Part A** of `01`, `02`, and `03`, including the build scope tables and the repository layout (paste a prepared tree). Mark anything you don't want to decide as `Claude proposes`. Say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
+| **0–20 min** | Fill **Part A** of `01`, `02`, and `03`, including the build scope tables and the repository layout (paste a prepared tree). Mark anything you don't want to decide as `Claude proposes`. Commit `docs/`, then say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
 | | Resolve the blocking decisions. Say `APPROVE PLAN`. | Records the approval, marks the tasks approved. |
 | **Iteration 1** | `IMPLEMENT TASK-001` (or `IMPLEMENT M1`), then `REVIEW TASK-001`, then `ACCEPT TASK-001`. | Implements, tests, and reports; reviews the diff; commits on acceptance. |
-| **By ~1 hour** | Run the app, test it manually, give `FEEDBACK: ...`. Refine **Part B** and Part A from what you learned. Say `REPLAN`. | Logs the feedback, proposes fixes, diffs the design changes, proposes plan v2. |
+| **By ~1 hour** | Run the app, test it manually. Talk to Claude in chat: `FEEDBACK: ...` for what's wrong, `CHANGE: ...` for a new or changed requirement or design decision. No file editing needed. `REPLAN` only if milestones change. | Logs feedback and proposes fixes; for `CHANGE`, records the decision, updates the design docs and tasks itself, and reports the impact. |
 | **Iterations 2+** | Repeat: implement, review, accept, feedback, refine. | |
 | **End** | `CLOSE PROJECT`, then your final acceptance. | Verifies, reports readiness, writes the handoff and hardening gap list. |
 
@@ -71,8 +69,19 @@ These are natural-language conventions defined in `CLAUDE.md`, not built-in Clau
 | `ACCEPT TASK-001` | Marks the task `Done` and commits it. |
 | `FEEDBACK: ...` | Analyzes your manual-test notes, logs `FB-XXX`, proposes a fix. |
 | `APPROVE FIX FB-001` | Implements the approved fix, leaves it uncommitted. Then `REVIEW FB-001` and `ACCEPT FB-001`. |
+| `CHANGE: ...` | Applies a requirement or design change you state in chat: records it as a decision, updates `docs/00`–`03` and the tasks, reports the impact. |
 | `STATUS` | Reports the current state. Changes nothing. |
 | `CLOSE PROJECT` | Runs closeout checks and prepares the handoff. |
+
+## Keeping token use low
+
+A `START` on a filled-in sample project used about 140k tokens over its tool calls. Most of a session's tokens go to the conversation growing, not to the toolkit files. To keep usage down:
+
+- **One session per milestone.** After `ACCEPT`, run `/clear` (or start a new session). `CLAUDE.md` loads automatically and Claude resumes from "Now" in `docs/04`. This is the biggest saving.
+- **Batch the ceremony.** On the Prototype profile, use `IMPLEMENT M1` and one `REVIEW` / `ACCEPT` per milestone, not per task.
+- **Use `/compact`** if a session gets long mid-milestone.
+- **Don't paste large logs or files.** Point Claude at the file or the failing command instead.
+- **Leave Part B blank during the build** unless it matters; the intake already covers it.
 
 ## Filling in the templates
 
@@ -105,8 +114,8 @@ Choose **Prototype**, **MVP**, or **Production candidate** in `01-PROJECT.md`. T
 ## Approvals and records
 
 - Claude never approves anything. When you approve in chat, Claude records it in the relevant file with a short summary of your message: `Approved (chat, YYYY-MM-DD): <summary>`. That record lets a new session see what is approved.
-- `docs/05-TASKS.md` starts with **Current state**. Claude reads it at the start of every session.
-- An approved decision in `docs/06-DECISIONS.md` supersedes the design documents on the point it covers. You may update the design document later to match.
+- During the build you work in one file, `docs/04-BUILD.md`: **Now**, plan, tasks, feedback, decisions. Claude maintains it and re-reads it at every command. You can answer decisions, override choices, defer tasks, or write `Approved (you, YYYY-MM-DD)` directly in it, or just do it in chat.
+- An approved decision in `docs/04` section 4 supersedes the design documents on the point it covers. You may update the design document later to match.
 - Claude commits only after review, on `ACCEPT`, one commit per task or batch. It never pushes unless you ask.
 
 ## Important boundaries

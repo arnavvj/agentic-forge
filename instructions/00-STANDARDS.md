@@ -1,33 +1,29 @@
-# STANDARDS: Delivery Profiles, Routine Defaults, and Engineering Standards
+# STANDARDS: Delivery Profiles, Defaults, and Engineering Standards
 
-## Purpose
-
-This file is the toolkit's reusable engineering layer. Read it before planning, implementing, reviewing, or closing work.
-
-It supplies defaults and standards. It does not override the user's design. Precedence is defined in `CLAUDE.md`.
+Read before planning, implementing, reviewing, or closing. These are defaults; they never override the user's design (precedence: `CLAUDE.md` section 2).
 
 ## 1. Delivery profiles
 
-The user selects one profile in `docs/01-PROJECT.md`. The profile sets the default rigor for planning, testing, records, and closeout. A design document may raise or lower any individual item.
+The user selects one in `docs/01-PROJECT.md`. It sets default rigor for planning, testing, records, and closeout. A design document may raise or lower any item.
 
 | Area | Prototype | MVP | Production candidate |
 |---|---|---|---|
 | Typical use | Interview, hackathon, spike, demo | Pilot with real users, internal tool | Path to real users, real data, or ongoing operation |
 | Automated tests | Critical-path happy path plus the most important failure path | Unit and integration tests for core logic, permission and tool-boundary tests, one end-to-end test of the primary journey | MVP level plus API / contract tests, regression suite, dependency and security checks |
 | Agent evaluations | At least 3 eval cases, run manually or by script | At least 10 eval cases, automated, including failure and refusal cases | Regression eval suite run on every material change, results tracked over time |
-| Task records | Task-list row and verification note | Task-list row plus verification evidence | Full task detail section per task |
-| Decision records | One-line register entries | Full record for architecture, security, data, and agent-topology decisions | Full record for every material decision |
+| Task records | Task row with checks run | Task row with checks and evidence | Task row plus a detail subsection |
+| Decision records | One-line rows | Full record for architecture, security, data, and agent-topology decisions | Full record for every material decision |
 | Authentication | May be stubbed if the design says so, clearly labeled | Real authentication when there is more than one user | Real authentication and authorization, isolation tested |
 | Observability | Readable logs, model and tool calls logged | Structured logs with request / run IDs, token and cost logging | Tracing, metrics, error monitoring, alerts as designed |
 | CI / infrastructure | None required | Basic automated checks if cheap | CI pipeline, infrastructure as designed, backups and recovery |
 | Mocks | Allowed when clearly labeled | Allowed only for non-core or unavailable integrations, clearly labeled | Only in tests |
 | Target readiness at close | Prototype / demo ready | MVP ready for user acceptance | Production candidate |
 
-When the profile changes (for example Prototype to MVP), re-plan with `REPLAN`. Use the `CLOSE PROJECT` hardening gap list as input.
+On a profile change, `REPLAN`, using the `CLOSE PROJECT` hardening gap list as input.
 
 ## 2. Routine defaults
 
-Claude may apply these without asking. List the defaults applied in the plan, in the "Assumptions and routine defaults applied" section. The design documents and existing repository conventions take precedence.
+Apply without asking; list them in `docs/04` under "Choices and assumptions". Design documents and repository conventions take precedence.
 
 - Follow existing repository conventions, formatter, linter, and test layout. In a new repository, use the stack's mainstream conventions.
 - Use current stable versions. Pin dependencies with the stack's lockfile.
@@ -43,7 +39,7 @@ Claude may apply these without asking. List the defaults applied in the plan, in
 - Use the stack's migration tool for schema changes. Provide demo or seed data when the journey needs it.
 - Keep the project README's setup, run, and test commands current as features land.
 
-These are **not** routine. Raise them as decisions:
+**Not** routine; raise as decisions:
 
 - A new external service, paid API, or data store.
 - Authentication, authorization, or tenancy models.
@@ -53,7 +49,7 @@ These are **not** routine. Raise them as decisions:
 
 ## 3. Engineering standards
 
-Apply these in proportion to the delivery profile:
+In proportion to the delivery profile:
 
 - Clear module boundaries and explicit interfaces between frontend, backend, services, agents, tools, and data stores.
 - Input validation and structured error handling at system boundaries.
@@ -93,7 +89,7 @@ Apply these in proportion to the delivery profile:
 
 ## 5. Git policy
 
-- Before starting a task, check the working tree. If it contains unrelated uncommitted changes, report them and ask before proceeding.
+- Before a task, check the working tree. Report unrelated uncommitted changes and ask before proceeding.
 - Do not commit during `IMPLEMENT`. Leave the task's changes uncommitted so `REVIEW` sees exactly that diff against `HEAD`.
 - Commit only after review, when the user accepts the work (`ACCEPT TASK-XXX` or `ACCEPT FB-XXX`). Use one commit per accepted task, batch, or feedback fix, with the message `TASK-XXX: <title>` or `FB-XXX: <summary>` (list every ID for a batch). Include the related documentation updates.
 - Commit on the current branch. Do not push, force-push, rewrite history, or switch branches unless the user explicitly asks.
