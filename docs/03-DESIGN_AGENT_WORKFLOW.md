@@ -61,8 +61,8 @@ Same rules as the build scope table in `02-DESIGN_SOFTWARE.md`, section 1: agent
 
 | Component | Scope (one) | Notes |
 |---|---|---|
-| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
-| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Provided [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Provided [ ] Later [ ] Out of scope | |
 
 ## 4. Agents
 

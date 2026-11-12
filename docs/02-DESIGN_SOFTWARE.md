@@ -40,10 +40,10 @@ Draw the full design; this table says what gets built now. List diagram componen
 
 | Component | Scope (one) | Notes |
 |---|---|---|
-| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
-| | [ ] Build [ ] Mock [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Provided [ ] Later [ ] Out of scope | |
+| | [ ] Build [ ] Mock [ ] Provided [ ] Later [ ] Out of scope | |
 
-**Build:** implement for real. **Mock:** a stub behind the real interface, replaceable later. **Later:** design context only; not built now, but nothing built may block it. **Out of scope:** not part of this project. A component not listed here is proposed by Claude in the plan.
+**Build:** implement for real. **Mock:** a stub behind the real interface, replaceable later. **Provided:** already exists or is supplied (a given API, dataset, or service); integrate with it as is, do not rebuild it. **Later:** design context only; not built now, but nothing built may block it. **Out of scope:** not part of this project. A component not listed here is proposed by Claude in the plan.
 
 ## 2. Architecture style (one)
 

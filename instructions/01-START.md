@@ -12,8 +12,9 @@ Understand the design and the repository, then propose a plan and tasks for appr
 4. Summarize the problem, users, core journey, must-have requirements, architecture, and agentic design.
 5. Diagrams and build scope (`docs/02` section 1, `docs/03` section 3):
    - Components are services, data stores, external services, agents, tools, and approval gates; entry and exit nodes are not.
-   - For `Build` and `Mock` components, check that the diagram matches the text and tables, and that components named in the text appear in the diagram. A mismatch that affects security, data access, permissions, or core behavior is a blocking decision. A minor one (e.g. a tool missing from a table) goes under "Choices and assumptions" with the resolution you used.
+   - For `Build`, `Mock`, and `Provided` components, check that the diagram matches the text and tables, and that components named in the text appear in the diagram. A mismatch that affects security, data access, permissions, or core behavior is a blocking decision. A minor one (e.g. a tool missing from a table) goes under "Choices and assumptions" with the resolution you used.
    - `Later` and `Out of scope` components are exempt.
+   - A `Provided` component that is missing from the repository or not reachable: list under "Decisions needed".
    - Every diagram component gets a scope in the "Build scope" table of `docs/04`: from the design table, or proposed by you if unlisted.
 6. Map requirements to the implementation. Identify gaps, contradictions, security concerns, and technical risks. Cross-check `docs/00` against Part A:
    - A `P1` intake item that Part A and the plan do not cover, or that Part A contradicts, is a blocking decision.
@@ -25,7 +26,7 @@ Understand the design and the repository, then propose a plan and tasks for appr
    - **Intake answer:** a blank Part B field the intake answers. Use it. → "Choices and assumptions", citing the row (e.g. `S-C1`).
    - **Proposed choice:** a `Claude proposes` field, a blank Part B field the intake does not answer, or an intake answer that cannot be implemented as written (give the reason). → "Choices and assumptions", with a recommendation.
    - **Routine default:** a non-material detail covered by `00-STANDARDS.md` or repository conventions. → "Choices and assumptions".
-8. Milestone M1: the smallest useful end-to-end vertical slice of the core journey, using only `Build` and `Mock` components. Repository layout (`docs/02` section 3):
+8. Milestone M1: the smallest useful end-to-end vertical slice of the core journey, using only `Build`, `Mock`, and `Provided` components. Repository layout (`docs/02` section 3):
    - Check every `Build` and `Mock` component has a folder; state which folders M1 creates.
    - `Open to suggestions` or blank: propose changes or a layout under "Choices and assumptions".
    - `Fixed`: subfolders inside listed folders are fine, and components may share a folder; a component with no fitting folder is a blocking decision.

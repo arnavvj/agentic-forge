@@ -103,7 +103,7 @@ Draw your designs as **Mermaid** diagrams directly in the templates. Each file h
 - `02-DESIGN_SOFTWARE.md`, section 1: the overall software architecture (clients, services, agent service, data stores, integrations).
 - `03-DESIGN_AGENT_WORKFLOW.md`, section 3: the agent architecture inside the agent service (agents, tools, data, approval gates, handoffs).
 
-Draw the full design, even if only part of it will be built now. Under each diagram, the **build scope** table marks components as `Build`, `Mock`, `Later`, or `Out of scope`; Claude proposes a scope for any you leave unlisted, and the plan shows the full scope for approval. Colour the diagram however you like: scope comes only from the table.
+Draw the full design, even if only part of it will be built now. Under each diagram, the **build scope** table marks components as `Build`, `Mock`, `Provided` (already exists; integrate, don't rebuild), `Later`, or `Out of scope`; Claude proposes a scope for any you leave unlisted, and the plan shows the full scope for approval. Colour the diagram however you like: scope comes only from the table.
 
 Diagrams carry the same authority as the text. At `START`, Claude checks them against the text and tables and raises any mismatch. Mermaid renders natively on GitHub. In VS Code, install **Markdown Preview Mermaid Support** (`bierner.markdown-mermaid`) to see the diagrams in the built-in markdown preview.
 

@@ -41,7 +41,7 @@ Surface any conflict between repository code and the approved design before a ma
 - Intake priorities: `P1` first; `P2` after `P1` work, in later milestones, unless it is a routine default or comes free with `P1` work; `P3` and `N/A` are recorded, not built now.
 - Apply routine defaults from `00-STANDARDS.md` only where they do not materially affect product behavior, security, privacy, architecture, cost, or user experience. State every default applied.
 - Mermaid diagrams in `docs/02` and `docs/03` have the same authority as the text. A diagram with only the placeholder node means no diagram. If a diagram and the text or tables disagree, raise it; do not pick one silently.
-- The build scope tables (`docs/02` section 1, `docs/03` section 3) decide what is built now; diagram colours do not. Build only `Build` and `Mock` components. `Later` and `Out of scope` components are design context: do not build them or ask about their missing detail. Propose a scope for any unlisted diagram component. A scope that conflicts with a `P1` intake row or a Part A requirement is a blocking decision.
+- The build scope tables (`docs/02` section 1, `docs/03` section 3) decide what is built now; diagram colours do not. Build only `Build` and `Mock` components. Integrate `Provided` components as they are; never rebuild or replace them. `Later` and `Out of scope` components are design context: do not build them or ask about their missing detail. Propose a scope for any unlisted diagram component. A scope that conflicts with a `P1` intake row or a Part A requirement is a blocking decision.
 - Do not invent business rules, user journeys, permissions, data access, or agent authority.
 
 ## 4. Commands

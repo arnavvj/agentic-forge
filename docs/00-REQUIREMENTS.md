@@ -147,6 +147,9 @@
 | # | Item | Answer / Notes | Priority | Maps to |
 |---|---|---|---|---|
 | S-H1 | Which of these components to include in the demo | | | 02 §1; 03 §3, §8; 01 §6, §9 |
+| S-H2 | Sample tables and schemas | | | 01 §13; 02 §10 |
+| S-H3 | Sample APIs | | | 02 §9 |
+| S-H4 | Design components: to be developed / mocked / already provided / excluded | | | 02 §1; 03 §3 |
 
 ---
 

@@ -34,7 +34,7 @@ Every component in the `docs/02` and `docs/03` diagrams.
 
 | Component | Diagram | Scope | Source |
 |---|---|---|---|
-| | 02 / 03 | Build · Mock · Later · Out of scope | Design · Intake row · Claude proposes |
+| | 02 / 03 | Build · Mock · Provided · Later · Out of scope | Design · Intake row · Claude proposes |
 
 ### Choices and assumptions
 
