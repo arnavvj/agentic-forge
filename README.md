@@ -1,132 +1,56 @@
 # agentic-forge
-Your agentic app-building sidekick for `claude`
 
-A reusable, documentation-only toolkit for directing Claude Code through the design, implementation, review, and refinement of full-stack applications that include AI agents or agentic workflows.
-
-The toolkit is domain-agnostic and technology-agnostic. It captures your project-specific design and supplies reusable engineering guidance. It does not prescribe a framework, model provider, database, cloud, agent topology, or architecture.
-
-## Core working agreement
-
-- **You own the system design.** You define the problem, requirements, architecture, agent behavior, constraints, and acceptance criteria.
-- **The toolkit supplies engineering guidance.** Standards and defaults help Claude make sound choices without replacing your design.
-- **Claude Code is the implementation worker.** It reads your design, proposes a plan, and implements approved work.
-- **You remain the decision maker.** You approve plans, review changes, run manual tests, give feedback, and accept the result.
+A lean harness for building a Python AI application with Claude Code and Codex in a timed coding round. You design; the assistants plan, build, and test from your notes.
 
 ## Contents
 
 ```text
-agentic-forge/
-├── README.md                         This guide (toolkit only; do not copy)
-├── CLAUDE.md                         Claude's working agreement, precedence, commands, approvals
-├── docs/
-│   ├── 00-REQUIREMENTS.md            You: raw requirements intake from the requirements round
-│   ├── 01-PROJECT.md                 You: problem, users, journey, requirements, delivery profile
-│   ├── 02-DESIGN_SOFTWARE.md         You: architecture, stack, identity, integrations, execution
-│   ├── 03-DESIGN_AGENT_WORKFLOW.md   You: agents, tools, limits, safety, evaluation
-│   └── 04-BUILD.md                   Shared: now, plan, tasks, feedback, decisions (the one file you use during the build)
-└── instructions/
-    ├── 00-STANDARDS.md               Delivery profiles, routine defaults, engineering and agent standards, git policy
-    ├── 01-START.md                   START, APPROVE PLAN, REPLAN
-    ├── 02-IMPLEMENT.md               IMPLEMENT (single task or batch)
-    ├── 03-REVIEW.md                  REVIEW, ACCEPT
-    ├── 04-FEEDBACK.md                FEEDBACK, APPROVE FIX, CHANGE
-    └── 05-CLOSE.md                   CLOSE PROJECT
+AGENTS.md          Rules and workflow for both assistants (Codex reads it directly)
+CLAUDE.md          One line, @AGENTS.md, so Claude Code reads the same rules
+docs/DESIGN.md     Your design notes: graph, state, turn lifecycle, tools, schemas, APIs, scope, evals
+docs/BUILD.md      Now, questions, choices, tasks with owners, decisions, issues
 ```
 
-## Setup for a new project
+## Setup
 
-1. Create and clone the project repository.
-2. Copy **only** `CLAUDE.md`, `docs/`, and `instructions/` into the project root. Do not copy this README, `LICENSE`, or `.gitignore`; the project needs its own.
-3. If the project already has a `CLAUDE.md` or a `docs/` folder, merge them instead of overwriting. Append the toolkit's `CLAUDE.md` to the existing one, and place the toolkit's files beside any existing docs.
-4. Open Claude Code from the project root.
+Copy `AGENTS.md`, `CLAUDE.md`, and `docs/` into the working repo root. If the scaffold already has an `AGENTS.md` or `CLAUDE.md`, append ours to it. Commit, then open Claude Code and Codex from the repo root.
 
-## Workflow and time budget
+## Workflow
 
-| When | You | Claude |
+| When | You | Assistants |
 |---|---|---|
-| **Requirements round** (before the build clock) | Answer the questions in `docs/00-REQUIREMENTS.md`, with notes and a priority per item. Pasting from a spreadsheet is fine. | — |
-| **0–20 min** | Fill **Part A** of `01`, `02`, and `03`, including the build scope tables and the repository layout (paste a prepared tree). Mark anything you don't want to decide as `Claude proposes`. Commit `docs/`, then say `START`. | Inspects the repo, writes the plan and proposed tasks, lists blocking decisions. |
-| | Resolve the blocking decisions. Say `APPROVE PLAN`. | Records the approval, marks the tasks approved. |
-| **Iteration 1** | `IMPLEMENT TASK-001` (or `IMPLEMENT M1`), then `REVIEW TASK-001`, then `ACCEPT TASK-001`. | Implements, tests, and reports; reviews the diff; commits on acceptance. |
-| **By ~1 hour** | Run the app, test it manually. Talk to Claude in chat: `FEEDBACK: ...` for what's wrong, `CHANGE: ...` for a new or changed requirement or design decision. No file editing needed. `REPLAN` only if milestones change. | Logs feedback and proposes fixes; for `CHANGE`, records the decision, updates the design docs and tasks itself, and reports the impact. |
-| **Iterations 2+** | Repeat: implement, review, accept, feedback, refine. | |
-| **End** | `CLOSE PROJECT`, then your final acceptance. | Verifies, reports readiness, writes the handoff and hardening gap list. |
-
-Part A is the minimum Claude needs to plan a first vertical slice. Part B adds precision; fill it as the design matures. You don't need it before the first build.
+| Design round | Prepare your notes (problem, graph, turn lifecycle, schemas, APIs, scope, evals). | — |
+| First minutes of coding | Paste the notes into `docs/DESIGN.md`. Commit. Say `PLAN`. | Read the design and scaffold; fill `BUILD.md` with questions, choices, and tasks. |
+| | Answer the questions (in chat or in `BUILD.md`). Set task owners. `GO 1`. | Phase 1: one full turn running end to end in `notebooks/01_turn.ipynb`, logic in `app/`. |
+| Then | Run the notebook. `CHANGE: ...` for design changes. `CHECKPOINT`. `GO 2`. | Phase 2: API, persistence, multi-turn, tests. |
+| If time | `GO 3`, `GO 4`. | Multi-user and hardening; demo and README. |
 
 ## Commands
 
-These are natural-language conventions defined in `CLAUDE.md`, not built-in Claude Code commands. Equivalent wording works. Approval must be explicit.
-
-| You say | Claude |
+| Say | Effect |
 |---|---|
-| `START` | Inspects, identifies gaps, proposes a plan and tasks. No application code. |
-| `APPROVE PLAN` | Records your approval; marks the plan's tasks `Approved`. |
-| `REPLAN` | Proposes plan and task updates after design refinement, a profile change, or closeout. |
-| `IMPLEMENT TASK-001` | Implements one approved task, leaves it uncommitted, reports test results. |
-| `IMPLEMENT M1` / `IMPLEMENT TASK-001..TASK-003` | Implements an approved batch; stops at the first failure or blocker. |
-| `REVIEW TASK-001` | Reviews the uncommitted diff without changing code. |
-| `ACCEPT TASK-001` | Marks the task `Done` and commits it. |
-| `FEEDBACK: ...` | Analyzes your manual-test notes, logs `FB-XXX`, proposes a fix. |
-| `APPROVE FIX FB-001` | Implements the approved fix, leaves it uncommitted. Then `REVIEW FB-001` and `ACCEPT FB-001`. |
-| `CHANGE: ...` | Applies a requirement or design change you state in chat: records it as a decision, updates `docs/00`–`03` and the tasks, reports the impact. |
-| `STATUS` | Reports the current state. Changes nothing. |
-| `CLOSE PROJECT` | Runs closeout checks and prepares the handoff. |
+| `PLAN` | Read the design and repo, fill `BUILD.md`, stop. |
+| `GO <task or phase>` | Build it. |
+| `CHANGE: ...` | Update the design, log the decision, adjust tasks, report impact. |
+| `STATUS` | Report "Now". |
+| `CHECKPOINT` | Run the tests and commit. |
 
-## Keeping token use low
+## Using two assistants
 
-A `START` on a filled-in sample project used about 140k tokens over its tool calls. Most of a session's tokens go to the conversation growing, not to the toolkit files. To keep usage down:
+- Give each a separate area in `BUILD.md`'s Owner column, for example Claude on the graph and nodes, Codex on persistence and the API.
+- Both read the same `AGENTS.md`, `DESIGN.md`, and `BUILD.md`, so either can pick up from the other.
+- `CHECKPOINT` between handovers so each starts from a clean commit.
 
-- **One session per milestone.** After `ACCEPT`, run `/clear` (or start a new session). `CLAUDE.md` loads automatically and Claude resumes from "Now" in `docs/04`. This is the biggest saving.
-- **Batch the ceremony.** On the Prototype profile, use `IMPLEMENT M1` and one `REVIEW` / `ACCEPT` per milestone, not per task.
-- **Use `/compact`** if a session gets long mid-milestone.
-- **Don't paste large logs or files.** Point Claude at the file or the failing command instead.
-- **Leave Part B blank during the build** unless it matters; the intake already covers it.
+## Keeping context small
 
-## Filling in the templates
+- Start a fresh session (`/clear`) after each `CHECKPOINT`; the assistant resumes from "Now" in `BUILD.md`.
+- Point at files and failing commands instead of pasting large output.
+- Keep `DESIGN.md` to your notes; detail belongs in code.
 
-| Value | Meaning |
-|---|---|
-| `[x]` | Selected choice or requirement. |
-| `[ ]` | Not selected. Never treated as approval. |
-| Blank | Unknown. A material blank in Part A becomes a blocking question at `START`. |
-| `Claude proposes` | You delegate the choice. Claude recommends it in the plan; it is approved with the plan. |
-| `N/A` | Not applicable. |
-| `Later` | Deliberately deferred. Claude will not implement it now. |
+## Observability
 
-A blank Part B field takes the answer from `docs/00-REQUIREMENTS.md` if the intake has one; otherwise it is treated as `Claude proposes`. The intake is raw input: where it conflicts with Part A, your design wins, and Claude raises any conflict or gap on a `P1` item at `START`. Routine, non-material details use the defaults in `instructions/00-STANDARDS.md`. Claude lists every default it applied in the plan.
+Tracing to a local Phoenix instance is on from the first notebook run, so every turn shows its node, model, and tool spans. In Phase 2 the traces go to your Phoenix server. A local Grafana dashboard (requests, latency, errors, linked to Phoenix by trace ID) is optional for the demo; mark it in `DESIGN.md` section 2.
 
-### Diagrams
+## Diagrams
 
-Draw your designs as **Mermaid** diagrams directly in the templates. Each file has a placeholder block to replace:
-
-- `02-DESIGN_SOFTWARE.md`, section 1: the overall software architecture (clients, services, agent service, data stores, integrations).
-- `03-DESIGN_AGENT_WORKFLOW.md`, section 3: the agent architecture inside the agent service (agents, tools, data, approval gates, handoffs).
-
-Draw the full design, even if only part of it will be built now. Under each diagram, the **build scope** table marks components as `Build`, `Mock`, `Provided` (already exists; integrate, don't rebuild), `Later`, or `Out of scope`; Claude proposes a scope for any you leave unlisted, and the plan shows the full scope for approval. Colour the diagram however you like: scope comes only from the table.
-
-Diagrams carry the same authority as the text. At `START`, Claude checks them against the text and tables and raises any mismatch. Mermaid renders natively on GitHub. In VS Code, install **Markdown Preview Mermaid Support** (`bierner.markdown-mermaid`) to see the diagrams in the built-in markdown preview.
-
-### Delivery profile
-
-Choose **Prototype**, **MVP**, or **Production candidate** in `01-PROJECT.md`. The profile sets the default depth of testing, evaluation, records, observability, and infrastructure, and the target readiness at close. To harden later, change the profile and say `REPLAN`. The `CLOSE PROJECT` hardening gap list feeds that plan.
-
-## Approvals and records
-
-- Claude never approves anything. When you approve in chat, Claude records it in the relevant file with a short summary of your message: `Approved (chat, YYYY-MM-DD): <summary>`. That record lets a new session see what is approved.
-- During the build you work in one file, `docs/04-BUILD.md`: **Now**, plan, tasks, feedback, decisions. Claude maintains it and re-reads it at every command. You can answer decisions, override choices, defer tasks, or write `Approved (you, YYYY-MM-DD)` directly in it, or just do it in chat.
-- An approved decision in `docs/04` section 4 supersedes the design documents on the point it covers. You may update the design document later to match.
-- Claude commits only after review, on `ACCEPT`, one commit per task or batch. It never pushes unless you ask.
-
-## Important boundaries
-
-- `CLAUDE.md` and `instructions/` guide Claude Code. They are **not** system prompts for agents inside your application. Runtime prompts belong in the application's source code.
-- Claude must not claim a test passed unless it ran the test and saw the result.
-- A successful demo does not, by itself, establish production readiness.
-- Keep secrets, tokens, passwords, private keys, and real customer data out of these documents and out of Git history.
-
-## Maintaining the toolkit
-
-Keep this repository as the canonical toolkit. Improve the reusable instructions and templates here. Promote a change from a project back into the toolkit only when it is genuinely reusable across projects.
-
-The toolkit stays documentation-only. Do not add Python scripts, generators, YAML or JSON configuration, or other automation to it. (Applications built with it may use whatever their design requires.) When asking Claude to edit the toolkit itself, say so explicitly; in this repository, the `docs/` files are templates.
+Draw the graph in `DESIGN.md` section 3 as Mermaid. In VS Code, install **Markdown Preview Mermaid Support** (`bierner.markdown-mermaid`) to preview it.

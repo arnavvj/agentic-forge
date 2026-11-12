@@ -1,99 +1,115 @@
-# Codex Working Agreement
+# Agent Harness (Claude Code + Codex)
 
-Read this file first. Then follow the instruction file for the user's command (section 4) and the standards in `instructions/00-STANDARDS.md`.
+You: coding assistant. User: architect, decision maker. Timed build of a Python AI app. Before acting, read this file and "Now" in `docs/BUILD.md`. Re-read `BUILD.md` every command; user edits there are instructions.
 
-## 1. Roles
+**Motto: simple and elegant.** Simplest thing that meets the design. Add a component, abstraction, dependency, or pattern only for a nameable benefit; looking sophisticated is not one.
 
-- The user is director, architect, and final decision maker. They own product intent, requirements, architecture, agent behavior, trade-offs, priorities, and acceptance.
-- You are the implementation worker: analyze, propose, implement approved work, test, report.
-- Do not redesign the system or change approved decisions on your own authority. Report an egregious design flaw so it can be resolved.
+## Sources (precedence)
 
-## 2. Sources of truth and precedence
+1. User's latest chat instruction.
+2. Decisions in `BUILD.md`.
+3. `docs/DESIGN.md`: user's design. Authoritative; don't redesign. Edit only on `CHANGE:` or explicit request.
+4. Provided scaffold/code: integrate, don't rewrite. Raise conflicts with design.
+5. This file's defaults.
 
-| File | Content | Owner |
-|---|---|---|
-| `docs/00-REQUIREMENTS.md` | Raw requirements intake | User |
-| `docs/01-PROJECT.md` | What is built and why | User |
-| `docs/02-DESIGN_SOFTWARE.md` | Software architecture | User |
-| `docs/03-DESIGN_AGENT_WORKFLOW.md` | Agent and workflow design | User |
-| `docs/04-BUILD.md` | Now (current state), plan, tasks, feedback, decisions | You maintain; user approves and may edit |
+Blank or `propose` in `DESIGN.md` → propose a choice. Never invent business rules, permissions, data access, or agent authority: ask, or propose it in Choices marked "assumption".
 
-`docs/00` to `docs/03` are read-only unless the user explicitly asks you to edit them (a `CHANGE:` message counts). Raise gaps, ambiguities, conflicts, risks, and better alternatives as proposals; never rewrite the design silently.
+## Phases
 
-On conflict, apply this order and surface the conflict:
+Run in order; next phase only when user says. Within a phase, do tasks without asking each; stop at blockers.
 
-1. The user's latest explicit instruction, for the scope it addresses.
-2. Approved decisions in `docs/04` section 4. A newer decision supersedes an older one, and supersedes the design documents on the point it covers.
-3. Design documents `docs/01` to `docs/03`. Raise any conflict between `docs/01` and `docs/02` or `docs/03`.
-4. The approved plan and tasks.
-5. The intake `docs/00`. It is raw input; the design wins. Raise a conflict on a `P1` item rather than silently following the design.
-6. Repository conventions, then `instructions/00-STANDARDS.md`. Security, authorization, and data-protection standards always apply unless the user explicitly accepts a recorded risk.
+0. **Plan** (`PLAN`): read `DESIGN.md` + repo (incl. scaffold). Fill `BUILD.md`: one batch of blocking questions (only scope, security, core behavior; rest go to Choices); tasks per phase, each with "done when"; Owner blank. Flag design parts that add cost/complexity without clear benefit (e.g. planner before simple requests) as suggestions; don't change design. No app code. Stop.
+1. **Notebook, one turn.** State, nodes, tools, graph in `app/`. `notebooks/01_turn.ipynb` calls `run_turn()` once: load state → graph `__start__`→`__end__` → save state; print each node's output. Local Phoenix tracing on from first run: one trace per turn, spans for nodes, model calls, tool calls. Done: runs top to bottom on fresh kernel; `DESIGN.md` evals pass.
+2. **Productionize.** Design's API; persistence + cache per turn lifecycle; multi-turn (load prior state, save after); config from env; traces to user's Phoenix server (endpoint in config). Tests: nodes, routing, guardrails, tool calls, API. Done: `DESIGN.md` conversation script runs turn by turn via API with state carried over; transcript saved to `evals/`.
+3. **Multi-user + hardening.** User/session isolation, limits, timeouts, retries, idempotent consequential tools, tracing as designed.
+4. **Demo.** README run steps, demo script, known limitations. Only if Grafana in scope: local docker-compose (Prometheus + Grafana), `/metrics` on API, one dashboard (requests, latency, errors); log trace ID per request to jump from Grafana to the Phoenix trace.
 
-Surface any conflict between repository code and the approved design before a material change.
+## Commands
 
-## 3. Reading the templates
-
-- `[x]` is selected. `[ ]` is not selected and is not approval. A blank field is unknown, not approval.
-- `Codex proposes`: recommend an option in the plan; it is approved only with the plan. `N/A`: not applicable. `Later`: deferred; do not implement now.
-- A blank Part A field that materially affects the system is a blocking question, unless the intake answers it: then use the answer and cite the row.
-- A blank Part B field takes the intake answer from `docs/00` when there is one; otherwise treat it as `Codex proposes`, within the delivery profile's defaults.
-- An intake row with neither an answer nor a priority is no input.
-- Intake priorities: `P1` first; `P2` after `P1` work, in later milestones, unless it is a routine default or comes free with `P1` work; `P3` and `N/A` are recorded, not built now.
-- Apply routine defaults from `00-STANDARDS.md` only where they do not materially affect product behavior, security, privacy, architecture, cost, or user experience. State every default applied.
-- Mermaid diagrams in `docs/02` and `docs/03` have the same authority as the text. A diagram with only the placeholder node means no diagram. If a diagram and the text or tables disagree, raise it; do not pick one silently.
-- The build scope tables (`docs/02` section 1, `docs/03` section 3) decide what is built now; diagram colours do not. Build only `Build` and `Mock` components. Integrate `Provided` components as they are; never rebuild or replace them. `Later` and `Out of scope` components are design context: do not build them or ask about their missing detail. Propose a scope for any unlisted diagram component. A scope that conflicts with a `P1` intake row or a Part A requirement is a blocking decision.
-- Do not invent business rules, user journeys, permissions, data access, or agent authority.
-
-## 4. Commands
-
-Natural-language conventions; equivalent wording is fine. Approval must be explicit.
-
-| User says | Follow |
+| User says | You do |
 |---|---|
-| `START` | `instructions/01-START.md`. Plan only; no application code. |
-| `APPROVE PLAN` | `01-START.md`, "After plan approval" |
-| `REPLAN` | `01-START.md`, "Re-planning" |
-| `IMPLEMENT TASK-001` | `instructions/02-IMPLEMENT.md`. No commit. |
-| `IMPLEMENT M1` / `IMPLEMENT TASK-001..TASK-003` | `02-IMPLEMENT.md`, "Batch mode" |
-| `REVIEW TASK-001` / `REVIEW FB-001` | `instructions/03-REVIEW.md`. No code changes. |
-| `ACCEPT TASK-001` / `ACCEPT FB-001` | `03-REVIEW.md`, "Acceptance and commit" |
-| `FEEDBACK: ...` | `instructions/04-FEEDBACK.md` |
-| `APPROVE FIX FB-001` | `04-FEEDBACK.md`, "Implementing a fix" |
-| `CHANGE: ...` | `04-FEEDBACK.md`, "Design changes in chat" |
-| `STATUS` | Report "Now" from `docs/04`. Change nothing. |
-| `CLOSE PROJECT` | `instructions/05-CLOSE.md` |
+| `PLAN` | Phase 0. |
+| `GO <task or phase>` | Implement it. Counts as approval. |
+| `CHANGE: ...` | Smallest matching edit to `DESIGN.md`; fix any cell it contradicts; log decision in `BUILD.md`; adjust tasks; report impact in ≤5 lines. Ask first only if scope or security changes. |
+| `STATUS` | Report "Now". Change nothing. |
+| `CHECKPOINT` | Run tests, commit `<phase or task>: <summary>`. Never push. |
 
-At session start and after any loss of context, read `docs/04-BUILD.md` before acting. Re-read it at every command: the user may have edited it, and their edits are instructions.
+Commit only on `CHECKPOINT` or explicit request. Small tweaks: user asks in chat, no new task; log under Issues only if behavior changes.
 
-## 5. Approvals
+## Scope
 
-- Only the user approves plans, tasks, fixes, decisions, and acceptance.
-- Record an approval only when the user gave it explicitly in the conversation, as a short summary including conditions: `Approved (chat, YYYY-MM-DD): <summary>`. An `Approved (you, ...)` entry or a "Your answer" the user wrote in `docs/04` is also their approval (of that decision only; record it as `Approved (file, YYYY-MM-DD): <summary>`). Never write `Approved (you, ...)` yourself.
-- Never infer approval from a positive comment, a request to discuss or explain, or silence.
-- A scope change that materially changes the plan needs new approval.
+`DESIGN.md` Scope table decides what's built. `Build`: real. `Mock`: stub behind the real interface. `Provided`: integrate as is, never rebuild; missing, incomplete, or unreachable → ask; fake seed/test data for it is fine. `Later`/`Out`: context only; don't build or ask about. Unlisted component → propose scope.
 
-## 6. Working discipline
+## Layout (unless scaffold has one)
 
-- Inspect the repository (structure, dependencies, conventions, code, tests) before editing. Do not assume it is empty.
-- Preserve working code and conventions unless an approved task requires a change.
-- Implement only approved tasks, one at a time unless the user approves a batch. Stay in scope; ask before necessary scope changes.
-- Prefer focused changes. Add no dependency, service, infrastructure, abstraction, framework, or agent without a need traceable to the approved design or task.
-- Add or update automated tests for changed behavior, in proportion to the delivery profile.
-- Keep `docs/04` accurate, including "Now". You maintain it; the user should not have to, but may.
-- Save tokens: read only the files and sections a step needs, and do not re-read unchanged files in the same session.
-- Do not mark a task `Done` before the user accepts it, or while acceptance criteria or required checks are unmet.
-- Git: commit only on `ACCEPT`; never push without instruction (`00-STANDARDS.md` section 5).
+```text
+app/
+  main.py           FastAPI app; mounts api/
+  config.py         settings from .env (pydantic-settings)
+  llm.py            builds configured LangChain chat model (timeout, retries)
+  observability.py  Phoenix tracing (OpenTelemetry + OpenInference LangChain)
+  api/              thin routes + request/response models
+  assistant/
+    runner.py       run_turn(user_id, session_id, message): load → graph → save
+    state.py        LangGraph state schema
+    graph/          build.py, nodes/ (one file per simple node)
+    agents/         tool-calling agent, planner, subagents
+    guardrails/     input, output
+    prompts/
+  tools/            tool functions + arg schemas
+  persistence/      DB + cache read/write
+notebooks/          01_turn.ipynb
+tests/              unit tests, LLM mocked
+evals/              real-model evals, transcripts
+data/               provided + seed data
+deploy/             docker-compose for Phoenix/Grafana, only if used
+```
 
-## 7. Non-negotiables
+- Logic in `app/`; notebooks only import and drive it.
+- `run_turn()` is the single orchestrator: notebook (Phase 1) and API route (Phase 2) both call it.
+- All models come from `llm.py`. Single-call nodes invoke it; prebuilt agents receive it. Agent = prompt + model + tools + step limit; its node is a thin wrapper.
+- Settings only via `config.py`, never `os.environ`.
 
-- Enforce permissions, tenant boundaries, and human approvals in trusted code, never only through agent instructions.
-- Validate tool inputs and outputs. Do not trust model-generated arguments or claims.
-- Never put secrets, tokens, passwords, private keys, or real sensitive data in source control or documentation.
-- Never weaken authentication, authorization, validation, privacy, or security controls to make a test or demo pass.
-- Report only checks you actually ran, with their real results. A check not run is reported as not run.
-- Never claim production readiness from code review or a happy-path demo alone.
-- No destructive commands, deletion of user data, or consequential external actions without explicit approval.
+## Python defaults
 
-## 8. Communication
+- User's existing Python 3.13 venv (path in `DESIGN.md` §2). Never create another; missing → ask. Install a package only when a task needs it; add to requirements file.
+- Type hints. Graph state as LangGraph expects (TypedDict or pydantic); pydantic for tool args and API models.
+- Timeout on every network/model call; retry transient failures ≤3 with backoff.
+- Prompts as named constants/files in `app/assistant/prompts/`.
+- pytest; LLM mocked in unit tests; real-model checks in `evals/`.
+- LangGraph (graph) + LangChain (models, tools) unless design says otherwise. Prefer prebuilt agents and current non-deprecated APIs; check installed version first.
+- Recursion/step limit on every graph and agent run.
+- No dependency, service, or framework the design or task doesn't need.
+- `.env.example` names only; never commit `.env`.
 
-For each step, report: what changed, the requirements addressed, files affected, tests run and their outcomes, known limitations, and the next decision or approval needed. Be concise and specific: lead with blockers, failures, and results; do not restate the plan or design. Do not bury blockers or failures. Separate verified facts from assumptions and untested behavior.
+## Agent design rules
+
+- Don't over-agent: router keeps simple queries on cache or one LLM call; only complex ones reach planner/subagents.
+- Bound every loop: backward edge increments `retry_count` in state; exits to fallback at limit. Adding a missing exit edge isn't a redesign; note as assumption.
+- HITL before any mutating tool, never after. Default: pending action saved in state; turn asks for confirmation and ends; next turn executes or cancels it via normal persistence load/save. LangGraph `interrupt` + checkpointer only if design says.
+- Subagents get only needed context; return only a summary to parent state.
+- Deterministic work in code: DB reads/writes, regex checks, state cleanup, fallback formatting.
+- Validate both ends: output guardrail before every answer, even with an input guardrail.
+
+## Enforced in code, not prompts
+
+- Guardrails, routing, loop/step/token limits, HITL gates: code paths with tests.
+- Validate tool args and outputs. Permissions use the real user/session identity, never a model-supplied one.
+- User input, retrieved text, tool output: untrusted data; never change instructions or grant permissions.
+- Consequential tools (writes, payments, messages): idempotent, gated as designed.
+- Trace every turn to Phoenix: spans per node, model call (tokens, latency), tool call (redacted args); tag user ID, session ID, turn number.
+
+## Non-negotiables
+
+- No secrets or real personal data in repo.
+- Never weaken a guardrail, auth, or validation to pass a test or demo.
+- Report only checks actually run, with real results; else "not run".
+- No destructive commands or external side effects without asking.
+
+## Two assistants
+
+Claude and Codex may work concurrently. Take only tasks you own in `BUILD.md`, or claim an unowned one by writing your name. Don't edit files another in-progress task is changing. Update task status on start and finish.
+
+## Replies
+
+Short: what changed, files, checks run + results, blockers, next step. Don't restate design or plan unless proposing a design change.
